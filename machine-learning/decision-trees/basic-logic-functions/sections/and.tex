@@ -1,0 +1,61 @@
+\section{AND}
+\subsection*{Step 1}
+$A=\{P, Q, W\}$ $S=[1+,7-]$ \newline
+
+Since A isn't empty and samples in S aren't all of the same class, i have to select the optimal attribute A and partition S according to the values that the attribute a can take. \\
+
+$E(S)=-\frac{1}{8}log_2\frac{1}{8}-\frac{3}{8}log_2\frac{3}{8}=0.543$
+
+Let's calculate the entropy for each attribute: \\
+\begin{itemize}
+  \item $S_{P0}=[0+,4-]$
+    \hfill
+    $E(S_{P0})=0$ \\
+    
+    $S_{P1}=[1+,3-]$
+    \hfill
+    $E(S_{P1})=-\frac{1}{4}log_2\frac{1}{4}-\frac{3}{4}log_2\frac{3}{4}=0.811$
+
+  \item $S_{Q0}=[0+,4-]$
+    \hfill
+    $E(S_{Q0})=0$ \\
+
+    $S_{Q1}=[1+,3-]$
+    \hfill
+    $E(S_{Q1})=-\frac{1}{4}log_2\frac{1}{4}-\frac{3}{4}log_2\frac{3}{4}=0.811$
+
+  \item $S_{W0}=[0+,4-]$
+    \hfill
+    $E(S_{W0})=0$ \\
+
+    $S_{W1}=[1+,3-]$
+    \hfill
+    $E(S_{W1})=-\frac{1}{4}log_2\frac{1}{4}-\frac{3}{4}log_2\frac{3}{4}=0.811$
+\end{itemize}
+
+Now let's calculate their information gain:
+\begin{itemize}
+  \item $G(S,P)=0.543-\frac{4}{8}*0 - \frac{4}{8}*0.811=0.137$
+  \item $G(S,Q)=0.543-\frac{4}{8}*0 - \frac{4}{8}*0.811=0.137$
+  \item $G(S,W)=0.543-\frac{4}{8}*0 - \frac{4}{8}*0.811=0.137$
+\end{itemize}
+
+All information gains are equal and so i don’t have an optimal attribute to select but i can pick one without distinguishing. \newline
+
+I create the root node with the attribute P:
+\begin{tikzpicture}
+[
+  level 1/.style = {red, sibling distance = 4cm},
+  level 2/.style = {blue, sibling distance = 2.5cm}
+]
+  
+\node {parent}
+  child { node {false}
+    child [missing] {[fill] circle (2pt)}
+    child [missing] {[fill] circle (2pt)}
+    edge from parent node [left] {0}
+  }};
+
+\end{tikzpicture}
+
+\subsection*{Step 2}

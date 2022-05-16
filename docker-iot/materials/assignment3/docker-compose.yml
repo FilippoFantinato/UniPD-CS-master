@@ -1,0 +1,26 @@
+version: '3'
+
+networks: 
+    pubsub-net:
+        driver: bridge
+
+services:
+    mosquitto1:
+        image: eclipse-mosquitto:latest
+        container_name: broker1
+        ports:
+            - 1883:1883
+        volumes:
+            - ./mosquitto1:/mosquitto/
+        networks: 
+            - pubsub-net
+
+    mosquitto2:
+        image: eclipse-mosquitto:latest
+        container_name: broker2
+        ports:
+            - 1884:1884
+        volumes:
+            - ./mosquitto2:/mosquitto/
+        networks: 
+            - pubsub-net

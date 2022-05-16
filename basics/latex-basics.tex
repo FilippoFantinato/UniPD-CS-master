@@ -1,0 +1,44 @@
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{array}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+% Header, footer and first page
+
+\fancyhead[LO,RE]{}
+\fancyhead[RO,RE]{\sffamily\itshape \personalName{} \personalCode}
+\renewcommand{\headrulewidth}{2pt}
+\pagestyle{fancy}
+
+\newcommand{\firstPageSetup}[1]{
+  \setlength{\parindent}{0pt}
+
+  \begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+  
+        {\Huge \textbf{#1}}
+  
+        \vspace{0.5cm}
+         
+        {\LARGE Machine Learning A.A. 2021/2022}
+        
+        \vspace{1.5cm}
+        
+        {\Large \personalName{} \personalCode }
+
+        \vfill
+    \end{center}
+  \end{titlepage}
+}
+
+
+% Commands
+\newcommand{\personalName}[0]{Filippo Fantinato}
+\newcommand{\personalCode}[0]{2041620}
+
