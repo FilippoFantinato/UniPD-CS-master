@@ -1,0 +1,13 @@
+
+
+
+class Main {
+  unit main() {
+    Customer filippo; filippo = new Customer(); filippo.init("Filippo");
+    filippo.deposit(100);
+    filippo.quit();
+  }
+}
+
+
+

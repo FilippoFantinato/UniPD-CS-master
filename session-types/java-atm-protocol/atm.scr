@@ -1,0 +1,25 @@
+module atm;
+ 
+type <java> "java.lang.Integer" from "rt.jar" as Int;
+type <java> "java.lang.String" from "rt.jar" as String;
+type <java> "java.lang.Boolean" from "rt.jar" as Boolean;
+
+global protocol ATM(role A, role C) {
+  SendName(String) from A to C;
+  rec ops {
+    choice at C {
+      Quit() from C to A;
+    } or {
+      Deposit() from C to A;
+      SendMoney(Int) from A to C;
+      Res(Boolean) from C to A;
+      continue ops;
+    } or {
+      Transfer() from C to A;
+      SendBankAddress(String) from A to C;
+      SendMoney(Int) from A to C;
+      Res(Boolean) from C to A;
+      continue ops;
+    }
+  }
+}

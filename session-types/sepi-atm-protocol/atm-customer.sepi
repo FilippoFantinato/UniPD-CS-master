@@ -1,0 +1,77 @@
+type ATMOps = &{
+  deposit: ?integer.+{
+      approved: !integer.ATMOps,
+      error: !string.ATMOps
+  },
+  transfer: ?string.?integer.+{
+      approved: !integer.ATMOps,
+      error: !string.ATMOps
+  },
+  quit: end
+}
+type ATM = ?string.ATMOps
+type Customer = dualof ATM
+type ATMServer = *!Customer
+
+def atmLoop (a: ATMOps, bal: integer) =
+	case a of
+	deposit ->
+		a?money.
+		if money > 0
+		then a select approved.
+				printStringLn!("Depsiting " ++ money).
+				a!bal+money.
+        		atmLoop!(a,bal+money)
+		else a select error.a!"Error: the amount of money is negative or equal to 0".atmLoop!(a,bal)
+	transfer ->
+		a?bank_address.
+		a?money.
+		if bal >= money and money > 0
+		then a select approved.
+				printStringLn!("Transferring to " ++ bank_address ++ " " ++ money).
+				a!bal-money.
+        atmLoop!(a,bal-money)
+		else a select error.a!"Error: not enough money".atmLoop!(a,bal)
+	quit -> 
+		printStringLn!"Bye bye"
+
+def atmProc () =
+	server!(new atm: ATM).{
+      atmProc!() |
+      atm?name.
+      printStringLn!("Hi " ++ name).
+      atmLoop!(atm,400)
+	}
+
+new server client: ATMServer
+
+atmProc!()
+|
+client?customer.
+customer!"Filippo".
+customer select transfer.
+customer!"Alice".
+customer!400.
+case customer of
+	approved ->
+		customer?new_balance.
+		printStringLn!("My new balance is " ++ new_balance).
+		customer select quit
+	error ->
+		customer?e.
+		printStringLn!(e).
+		customer select quit
+|
+client?customer.
+customer!"Alice".
+customer select deposit.
+customer!100.
+case customer of
+	approved ->
+		customer?new_balance.
+		printStringLn!("My new balance is " ++ new_balance).
+		customer select quit
+	error ->
+		customer?e.
+        printStringLn!(e).
+        customer select quit

@@ -1,0 +1,331 @@
+
+-- Machines #0
+-- main.Phil.t8@0*
+.outputs
+.state graph
+q00 12 ? int q02
+q00 13 ? int q03
+q00 14 ? int q04
+q01 12 ! STOP q01
+q01 12 ! STOP q01
+q01 13 ? STOP q01
+q01 14 ! STOP q01
+q01 13 ! STOP q01
+q01 14 ? STOP q01
+q01 13 ! STOP q01
+q01 12 ? STOP q01
+q01 14 ! STOP q01
+q02 13 ! int q00
+q02 14 ! int q00
+q03 14 ! int q00
+q03 12 ! int q00
+q04 13 ! int q00
+q04 12 ! int q00
+.marking q00
+.end
+
+-- Machines #1
+-- main.Phil.t17@0*
+.outputs
+.state graph
+q10 12 ? int q12
+q10 13 ? int q13
+q10 14 ? int q14
+q11 14 ! STOP q11
+q11 12 ! STOP q11
+q11 12 ! STOP q11
+q11 13 ! STOP q11
+q11 12 ? STOP q11
+q11 13 ! STOP q11
+q11 14 ! STOP q11
+q11 13 ? STOP q11
+q11 14 ? STOP q11
+q12 14 ! int q10
+q12 13 ! int q10
+q13 12 ! int q10
+q13 14 ! int q10
+q14 13 ! int q10
+q14 12 ! int q10
+.marking q10
+.end
+
+-- Machines #2
+-- (*main.Fork).Run.t11@0*
+.outputs
+.state graph
+q20 13 ? int q22
+q20 14 ? int q23
+q20 12 ? int q24
+q21 13 ? STOP q21
+q21 13 ! STOP q21
+q21 12 ? STOP q21
+q21 12 ! STOP q21
+q21 14 ! STOP q21
+q21 14 ? STOP q21
+q21 12 ! STOP q21
+q21 13 ! STOP q21
+q21 14 ! STOP q21
+q22 12 ! int q20
+q22 14 ! int q20
+q23 13 ! int q20
+q23 12 ! int q20
+q24 14 ! int q20
+q24 13 ! int q20
+.marking q20
+.end
+
+-- Machines #3
+-- main.Phil.t8@1*
+.outputs
+.state graph
+q30 12 ? int q32
+q30 13 ? int q33
+q30 14 ? int q34
+q31 14 ? STOP q31
+q31 13 ! STOP q31
+q31 13 ! STOP q31
+q31 13 ? STOP q31
+q31 12 ! STOP q31
+q31 12 ! STOP q31
+q31 12 ? STOP q31
+q31 14 ! STOP q31
+q31 14 ! STOP q31
+q32 14 ! int q30
+q32 13 ! int q30
+q33 12 ! int q30
+q33 14 ! int q30
+q34 13 ! int q30
+q34 12 ! int q30
+.marking q30
+.end
+
+-- Machines #4
+-- main.Phil.t15@1*
+.outputs
+.state graph
+q40 13 ? int q43
+q40 14 ? int q44
+q40 12 ? int q42
+q41 12 ? STOP q41
+q41 13 ! STOP q41
+q41 12 ! STOP q41
+q41 13 ! STOP q41
+q41 14 ! STOP q41
+q41 13 ? STOP q41
+q41 14 ! STOP q41
+q41 14 ? STOP q41
+q41 12 ! STOP q41
+q42 13 ! int q40
+q42 14 ! int q40
+q43 14 ! int q40
+q43 12 ! int q40
+q44 12 ! int q40
+q44 13 ! int q40
+.marking q40
+.end
+
+-- Machines #5
+-- main.Phil.t17@1*
+.outputs
+.state graph
+q50 14 ? int q54
+q50 12 ? int q52
+q50 13 ? int q53
+q51 13 ! STOP q51
+q51 13 ! STOP q51
+q51 14 ! STOP q51
+q51 12 ! STOP q51
+q51 14 ? STOP q51
+q51 12 ! STOP q51
+q51 12 ? STOP q51
+q51 14 ! STOP q51
+q51 13 ? STOP q51
+q52 13 ! int q50
+q52 14 ! int q50
+q53 12 ! int q50
+q53 14 ! int q50
+q54 12 ! int q50
+q54 13 ! int q50
+.marking q50
+.end
+
+-- Machines #6
+-- main.main.t10@0
+.outputs
+.state graph
+q60 12 ? int q62
+q60 13 ? int q63
+q60 14 ? int q64
+q61 12 ? STOP q61
+q61 13 ! STOP q61
+q61 14 ! STOP q61
+q61 13 ? STOP q61
+q61 14 ! STOP q61
+q61 14 ? STOP q61
+q61 13 ! STOP q61
+q61 12 ! STOP q61
+q61 12 ! STOP q61
+q62 13 ! int q60
+q62 14 ! int q60
+q63 12 ! int q60
+q63 14 ! int q60
+q64 13 ! int q60
+q64 12 ! int q60
+.marking q60
+.end
+
+-- Machines #7
+-- main.main.t12@0
+.outputs
+.state graph
+q70 13 ? int q72
+q70 14 ? int q73
+q70 12 ? int q74
+q71 12 ? STOP q71
+q71 13 ! STOP q71
+q71 13 ? STOP q71
+q71 12 ! STOP q71
+q71 14 ! STOP q71
+q71 14 ? STOP q71
+q71 13 ! STOP q71
+q71 12 ! STOP q71
+q71 14 ! STOP q71
+q72 14 ! int q70
+q72 12 ! int q70
+q73 12 ! int q70
+q73 13 ! int q70
+q74 14 ! int q70
+q74 13 ! int q70
+.marking q70
+.end
+
+-- Machines #8
+-- main.Phil.t6@0*
+.outputs
+.state graph
+q80 12 ? int q82
+q80 13 ? int q83
+q80 14 ? int q84
+q81 13 ! STOP q81
+q81 13 ? STOP q81
+q81 12 ! STOP q81
+q81 14 ! STOP q81
+q81 12 ! STOP q81
+q81 13 ! STOP q81
+q81 12 ? STOP q81
+q81 14 ! STOP q81
+q81 14 ? STOP q81
+q82 13 ! int q80
+q82 14 ! int q80
+q83 14 ! int q80
+q83 12 ! int q80
+q84 12 ! int q80
+q84 13 ! int q80
+.marking q80
+.end
+
+-- Machines #9
+-- main.Phil.t15@0*
+.outputs
+.state graph
+q90 13 ? int q93
+q90 14 ? int q94
+q90 12 ? int q92
+q91 14 ! STOP q91
+q91 14 ? STOP q91
+q91 12 ! STOP q91
+q91 13 ! STOP q91
+q91 12 ? STOP q91
+q91 13 ! STOP q91
+q91 14 ! STOP q91
+q91 13 ? STOP q91
+q91 12 ! STOP q91
+q92 13 ! int q90
+q92 14 ! int q90
+q93 12 ! int q90
+q93 14 ! int q90
+q94 13 ! int q90
+q94 12 ! int q90
+.marking q90
+.end
+
+-- Machines #10
+-- (*main.Fork).Run.t1@0*
+.outputs
+.state graph
+q100 13 ? int q102
+q100 14 ? int q103
+q100 12 ? int q104
+q101 14 ? STOP q101
+q101 13 ! STOP q101
+q101 12 ? STOP q101
+q101 13 ! STOP q101
+q101 14 ! STOP q101
+q101 12 ! STOP q101
+q101 12 ! STOP q101
+q101 14 ! STOP q101
+q101 13 ? STOP q101
+q102 12 ! int q100
+q102 14 ! int q100
+q103 13 ! int q100
+q103 12 ! int q100
+q104 13 ! int q100
+q104 14 ! int q100
+.marking q100
+.end
+
+-- Machines #11
+-- main.Phil.t6@1*
+.outputs
+.state graph
+q110 12 ? int q112
+q110 13 ? int q113
+q110 14 ? int q114
+q111 12 ? STOP q111
+q111 14 ! STOP q111
+q111 13 ? STOP q111
+q111 14 ? STOP q111
+q111 13 ! STOP q111
+q111 14 ! STOP q111
+q111 12 ! STOP q111
+q111 13 ! STOP q111
+q111 12 ! STOP q111
+q112 13 ! int q110
+q112 14 ! int q110
+q113 12 ! int q110
+q113 14 ! int q110
+q114 12 ! int q110
+q114 13 ! int q110
+.marking q110
+.end
+
+-- Machines #12
+-- Phil_872
+.outputs
+.state graph
+q120 11 ! int q121
+q121 3 ! int q122
+q122 4 ! int q123
+q123 5 ! int q124
+.marking q120
+.end
+
+-- Machines #13
+-- main
+.outputs
+.state graph
+q130 8 ! int q131
+q131 0 ! int q132
+q132 9 ! int q133
+q133 1 ! int q134
+.marking q130
+.end
+
+-- Machines #14
+-- Run_816
+.outputs
+.state graph
+q140 10 ? int q141
+q141 2 ? int q142
+.marking q140
+.end

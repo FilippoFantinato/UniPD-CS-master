@@ -1,0 +1,65 @@
+digraph G {
+	label0->label1;
+	label1->NoOp2;
+	NoOp2->NewChanOp3;
+	NewChanOp3->NewChanOp4;
+	NewChanOp4->label1;
+	label1->NoOp5;
+	NoOp5->label6;
+	label6->NoOp7;
+	NoOp7->label6;
+	label6->NoOp8;
+	NoOp8->label9;
+	label9->SendOp10;
+	SendOp10->SendOp11;
+	SendOp11->SendOp12;
+	SendOp12->SendOp13;
+	SendOp13->label9;
+	label14->label15;
+	label15->RecvOp16;
+	RecvOp16->RecvOp17;
+	RecvOp17->label15;
+	label18->label19;
+	label19->SendOp20;
+	SendOp20->SendOp21;
+	SendOp21->SendOp22;
+	SendOp22->SendOp23;
+	SendOp23->label19;
+	subgraph "cluster_Phil_872" {
+	SendOp20 [ label="Send main.Phil.t6@1*", shape=rect, style=solid ];
+	SendOp21 [ label="Send main.Phil.t8@1*", shape=rect, style=solid ];
+	SendOp22 [ label="Send main.Phil.t15@1*", shape=rect, style=solid ];
+	SendOp23 [ label="Send main.Phil.t17@1*", shape=rect, style=solid ];
+	label18 [ label="Phil_872", shape=plaintext, ];
+	label19 [ label="main.Phil#1", shape=plaintext, ];
+
+}
+;
+	subgraph "cluster_Run_816" {
+	RecvOp16 [ label="Recv (*main.Fork).Run.t1@0*", shape=rect, style=solid ];
+	RecvOp17 [ label="Recv (*main.Fork).Run.t11@0*", shape=rect, style=solid ];
+	label14 [ label="Run_816", shape=plaintext, ];
+	label15 [ label="(*main.Fork).Run#1", shape=plaintext, ];
+
+}
+;
+	subgraph "cluster_main" {
+	NewChanOp3 [ color=red, label="Channel main.main.t10@0 Type:int", shape=rect ];
+	NewChanOp4 [ color=red, label="Channel main.main.t12@0 Type:int", shape=rect ];
+	NoOp2 [ label="(Empty)", shape=rect ];
+	NoOp5 [ label="(Empty)", shape=rect ];
+	NoOp7 [ label="(Empty)", shape=rect ];
+	NoOp8 [ label="(Empty)", shape=rect ];
+	SendOp10 [ label="Send main.Phil.t6@0*", shape=rect, style=solid ];
+	SendOp11 [ label="Send main.Phil.t8@0*", shape=rect, style=solid ];
+	SendOp12 [ label="Send main.Phil.t15@0*", shape=rect, style=solid ];
+	SendOp13 [ label="Send main.Phil.t17@0*", shape=rect, style=solid ];
+	label0 [ label="main", shape=plaintext, ];
+	label1 [ label="main.main#3", shape=plaintext, ];
+	label6 [ label="main.main#6", shape=plaintext, ];
+	label9 [ label="main.Phil#1", shape=plaintext, ];
+
+}
+;
+
+}

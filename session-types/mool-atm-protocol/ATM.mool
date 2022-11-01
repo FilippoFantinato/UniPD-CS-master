@@ -1,0 +1,32 @@
+
+
+class ATM {
+  usage lin{init; ATMOps} where
+    ATMOps = <Deposit + <Transfer + Quit>>
+    Deposit = lin{canIDeposit; <lin{deposit; ATMOps} + ATMOps>}
+    Transfer = lin{canITransfer; <lin{transfer; ATMOps} + ATMOps>}
+    Quit = lin{quit; end};
+  int balance;
+  unit init() {
+    balance = 400;
+  }
+  boolean canIDeposit(int money){
+    money > 0;
+  }
+  int deposit(int money) {
+    balance = balance - money;
+    balance;
+  }
+  boolean canITransfer(int money) {
+    balance >= money;
+  }
+  int transfer(string bankAddress, int money) {
+    balance = balance - money;
+    balance;
+  }
+  unit quit(string name) {
+    printStr("Bye bye ");
+    printStr(name);
+    printStr("\n");
+  }
+}

@@ -1,0 +1,6 @@
+(executable
+ (name atm)
+ (modules atm)
+ (preprocess
+  (staged_pps mpst.ppx.ty))
+ (libraries ocaml_atm_protocol_multi mpst))

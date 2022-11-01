@@ -1,0 +1,4 @@
+(executable
+ (public_name ocaml_atm_protocol)
+ (name main)
+ (libraries ocaml_atm_protocol lwt.unix sessions sessions.lwt))

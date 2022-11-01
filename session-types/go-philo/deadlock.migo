@@ -1,0 +1,48 @@
+def main.main():
+    call main.main#3();
+def main.main#3():
+    let t10 = newchan main.main.t10_0_0, 0;
+    let t12 = newchan main.main.t12_0_0, 0;
+    spawn main.Fork.Run();
+    call main.main#3(t10, t12);
+    let t10 = newchan main.main.t10_0_1, 0;
+    let t12 = newchan main.main.t12_0_1, 0;
+    spawn main.Fork.Run();
+    call main.main#3(t10, t12, t10, t12);
+    let t10 = newchan main.main.t10_0_2, 0;
+    let t12 = newchan main.main.t12_0_2, 0;
+    spawn main.Fork.Run();
+    call main.main#3(t10, t12, t10, t12, t10, t12);
+    let t10 = newchan main.main.t10_0_3, 0;
+    let t12 = newchan main.main.t12_0_3, 0;
+    spawn main.Fork.Run();
+    call main.main#3(t10, t12, t10, t12, t10, t12, t10, t12);
+    let t10 = newchan main.main.t10_0_4, 0;
+    let t12 = newchan main.main.t12_0_4, 0;
+    spawn main.Fork.Run();
+    call main.main#3(t10, t12, t10, t12, t10, t12, t10, t12, t10, t12);
+    call main.main#6(t10, t12, t10, t12, t10, t12, t10, t12, t10, t12);
+def main.main#6(t10, t12):
+    spawn main.Phil();
+    call main.main#6(t10, t12, t10, t12, t10, t12, t10, t12, t10, t12, t10, t12);
+    spawn main.Phil();
+    call main.main#6(t10, t12, t10, t12, t10, t12, t10, t12, t10, t12, t10, t12);
+    spawn main.Phil();
+    call main.main#6(t10, t12, t10, t12, t10, t12, t10, t12, t10, t12, t10, t12);
+    spawn main.Phil();
+    call main.main#6(t10, t12, t10, t12, t10, t12, t10, t12, t10, t12, t10, t12);
+    call main.Phil();
+def main.Phil():
+    call main.Phil#1();
+def main.Phil#1():
+    send t5;
+    send t7;
+    send t14;
+    send t16;
+    call main.Phil#1();
+def main.Fork.Run():
+    call main.Fork.Run#1();
+def main.Fork.Run#1():
+    recv t9;
+    recv t11;
+    call main.Fork.Run#1();

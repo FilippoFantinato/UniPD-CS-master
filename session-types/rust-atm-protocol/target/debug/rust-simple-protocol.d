@@ -1,0 +1,1 @@
+/home/filippofantinato/Desktop/UniPD/UniPD-CS-master/session-types/rust-simple-protocol/target/debug/rust-simple-protocol: /home/filippofantinato/Desktop/UniPD/UniPD-CS-master/session-types/rust-simple-protocol/src/main.rs

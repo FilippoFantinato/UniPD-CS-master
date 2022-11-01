@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/ocaml_atm_protocol_multi/META"
+  "_build/install/default/lib/ocaml_atm_protocol_multi/dune-package"
+  "_build/install/default/lib/ocaml_atm_protocol_multi/opam"
+]
+bin: [
+  "_build/install/default/bin/ocaml_atm_protocol_multi"
+]

@@ -1,0 +1,1 @@
+/home/filippofantinato/Desktop/UniPD/UniPD-CS-master/session-types/rust-atm-protocol/target/debug/rust-atm-protocol: /home/filippofantinato/Desktop/UniPD/UniPD-CS-master/session-types/rust-atm-protocol/src/main.rs

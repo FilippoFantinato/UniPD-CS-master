@@ -1,0 +1,56 @@
+
+
+
+class Customer {
+  usage lin{init; Ops} where
+  Ops = *{deposit + transfer + quit};
+  ATM atm; string name;
+  unit init(string n) {
+    atm = new ATM();
+    atm.init();
+    name = n;
+  }
+  unit deposit(int money) {
+    if(atm.canIDeposit(money)) {
+      printStr("Depositing ");
+      printInt(money);
+      printStr("\n");
+
+      int newBalance;
+      newBalance = atm.deposit(money);
+
+      printStr("My new balance is: ");
+      printInt(newBalance);
+      printStr("\n");
+    } else {
+      printStr("Error: the amout of money is negative or equal to 0\n");
+    }
+  }
+
+
+  
+  unit transfer(string bankAddress, int money) {
+    if(atm.canITransfer(money)) {
+      printStr("Transferring from ");
+      printStr(name);
+      printStr(" to ");
+      printStr(bankAddress);
+      printStr(" ");
+      printInt(money);
+      printStr("\n");
+
+      int newBalance;
+      newBalance = atm.transfer(bankAddress, money);
+
+      printStr("My new balance is: ");
+      printInt(newBalance);
+      printStr("\n");
+    } else {
+      printStr("Error: not enough money");
+    }
+  }
+
+  unit quit() {
+    atm.quit(name); 
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "cSpell.enabled": false,
+  "ocaml.sandbox": {
+    "kind": "opam",
+    "switch": "default"
+  },
+  "files.watcherExclude": {
+    "**/target": true
+  }
+}

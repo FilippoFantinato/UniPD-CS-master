@@ -1,0 +1,2 @@
+(library
+ (name ocaml_atm_protocol))
