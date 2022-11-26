@@ -1,0 +1,1732 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 20 225 575 566
+%%Creator: FreeHEP Graphics2D Driver
+%%Producer: org.freehep.graphicsio.ps.EPSGraphics2D Revision: 12753 
+%%For: 
+%%Title: 
+%%CreationDate: Saturday, November 26, 2022 8:54:07 AM CET
+%%LanguageLevel: 3
+%%EndComments
+%%BeginProlog
+100 dict dup begin
+
+%
+% File: org/freehep/graphicsio.ps/PSProlog.txt
+% Author: Charles Loomis
+%
+
+% Redefinitions which save some space in the output file.  These are also
+% the same as the PDF operators.
+/q {gsave} def
+/Q {grestore} def
+
+/n {newpath} def
+/m {moveto} def
+/l {lineto} def
+/c {curveto} def
+/h {closepath} def
+
+/re {4 -2 roll moveto
+     dup 0 exch rlineto exch 0 rlineto
+     neg 0 exch rlineto closepath} def
+
+/f {fill} def
+/f* {eofill} def
+/F {gsave vg&FC fill grestore} def
+/F* {gsave vg&FC eofill grestore} def
+
+/s {closepath stroke} def
+/S {stroke} def
+
+/b {closepath gsave vg&FC fill grestore
+    gsave stroke grestore newpath} def
+/B {gsave vg&FC fill grestore gsave stroke grestore newpath} def
+/b* {closepath gsave vg&FC eofill grestore
+    gsave stroke grestore newpath} def
+/B* {gsave vg&FC eofill grestore gsave stroke grestore newpath} def
+
+/g {1 array astore /vg&fcolor exch def} def
+/G {setgray} def
+/k {4 array astore /vg&fcolor exch def} def
+/K {setcmykcolor} def
+/rg {3 array astore /vg&fcolor exch def} def
+/RG {setrgbcolor} def
+
+% Initialize the fill color.
+0 0 0 rg
+
+/vg&FC {mark vg&fcolor aload pop
+        counttomark 1 eq {G} if
+        counttomark 3 eq {RG} if
+        counttomark 4 eq {K} if
+        cleartomark } def
+
+/vg&DFC {/vg&fcolor exch def} def
+
+/vg&C {mark exch aload pop
+       counttomark 1 eq {G} if
+       counttomark 3 eq {RG} if
+       counttomark 4 eq {K} if
+       cleartomark } def
+
+/w {setlinewidth} def
+/j {setlinejoin} def
+/J {setlinecap} def
+/M {setmiterlimit} def
+/d {setdash} def
+/i {setflat} def
+
+/W {clip} def
+/W* {eoclip} def
+
+% Setup the default graphics state.
+% (black; 1 pt. linewidth; miter join; butt-ends; solid)
+/defaultGraphicsState {0 g 1 w 0 j 0 J [] 0 d} def
+
+% Emulation of the rectangle operators for PostScript implementations
+% which do not implement all Level 2 features.  This is an INCOMPLETE
+% emulation; only the "x y width height rect..." form is emulated.
+/*rf {gsave newpath re fill grestore} def
+/*rs {gsave newpath re stroke grestore} def
+/*rc {newpath re clip} def
+/rf  /rectfill where {pop /rectfill}{/*rf} ifelse load def
+/rs  /rectstroke where {pop /rectstroke}{/*rs} ifelse load def
+/rc  /rectclip where {pop /rectclip}{/*rc} ifelse load def
+
+% Emulation of the selectfont operator.  This includes a 20% increase in
+% the fontsize which is necessary to get sizes similar to the Java fonts.
+/*sf {exch findfont exch
+      dup type /arraytype eq {makefont}{scalefont} ifelse setfont} bind def
+/sf /selectfont where {pop {1.2 mul selectfont}}{{1.2 mul *sf}} ifelse def
+
+% Special version of stroke which allows the dash pattern to continue
+% across path segments.  (This may be needed for PostScript although
+% modern printers seem to do this correctly.)
+/vg&stroke {
+  currentdash pop length 0 eq
+  {stroke}
+  {
+    currentdash /vg&doffset exch def pop
+    flattenpath
+    {m vg&resetdash}
+    {2 copy
+     currentpoint
+     3 -1 roll sub dup mul
+     3 1 roll sub dup mul
+     add sqrt
+     3 1 roll l
+     currentdash 3 -1 roll add setdash}
+     {}
+     {h vg&resetdash}
+     pathforall
+     stroke
+     vg&resetdash
+  } ifelse
+} def
+/vg&resetdash {currentdash pop vg&doffset setdash} def
+
+% Initialize variables for safety.
+/delta 0 def
+/xv 0 def  /yv 0 def  /width 0 def  /height 0 def
+
+% Initialize to portrait INTERNATIONAL (Letter-height, A4-width) page.
+/pw 595 def  /ph 791  def  /po true def /ftp false def
+
+% Initialize margins to 20 points.
+/ml 20 def  /mr 20 def  /mt 20 def  /mb 20 def
+
+% Temporary matrices.
+/smatrix 0 def  /nmatrix 0 def
+
+% set page size (usage: <page width><page height> setpagesize)
+/setpagesize {/ph exch def /pw exch def} def
+
+% set page orientation (usage: portrait or landscape)
+/portrait {/po true def} def
+/landscape {/po false def} def
+
+% force natural size for image (usage: naturalsize)
+/naturalsize {/ftp false def} def
+
+% resize image to fill page (usage: fittopage)
+/fittopage {/ftp true def} def
+
+% set margins of the page (usage: <left><bottom><top><right> setmargins)
+/setmargins {/mr exch def /mt exch def /mb exch def /ml exch def} def
+
+% set the graphic's size (usage: <width><height> setsize)
+/setsize {/gh exch def /gw exch def} def
+
+% set the graphic's origin (usage: <x0><y0> setorigin)
+/setorigin {/gy exch def /gx exch def} def
+
+% calculate image center
+/imagecenter {pw ml sub mr sub 2 div ml add
+              ph mt sub mb sub 2 div mb add} def
+
+% calculate the necessary scaling
+/imagescale {po {gw}{gh} ifelse pw ml sub mr sub div
+             po {gh}{gw} ifelse ph mt sub mb sub div
+             2 copy lt {exch} if pop
+             ftp not {1 2 copy lt {exch} if pop} if
+             1 exch div /sfactor exch def
+             /gw gw sfactor mul def /gh gh sfactor mul def} def
+
+% calculate image origin
+/imageorigin {pw ml sub mr sub 2 div ml add
+              po {gw}{gh} ifelse 2 div sub
+              ph mt sub mb sub 2 div mb add
+              po {gh}{gw} ifelse 2 div po {add}{sub} ifelse} def
+
+% calculate the clipping origin
+/cliporigin  {pw ml sub mr sub 2 div ml add
+              po {gw}{gh} ifelse 2 div sub floor
+              ph mt sub mb sub 2 div mb add
+              po {gh}{gw} ifelse 2 div sub floor} def
+
+% Set the clipping region to the bounding box.
+/cliptobounds {cliporigin po {gw}{gh} ifelse 1 add
+                          po {gh}{gw} ifelse 1 add rc} def
+
+% set the base transformation matrix (usage: setbasematrix)
+/setbasematrix {imageorigin translate
+                po {0}{90} ifelse rotate
+                sfactor sfactor neg scale
+                /defaultmatrix matrix currentmatrix def} def
+
+% The lower-right bias in drawing 1 pt. wide lines.
+/bias  {q 0.5 0.5 translate} def
+/unbias {Q} def
+
+% Define the composite fonts used to print Unicode strings.
+% Undefine particular values in an encoding array.
+/vg&undef { {exch dup 3 -1 roll /.notdef put} forall } def
+/vg&redef { {3 -1 roll dup 4 2 roll put} forall } def
+
+% usage: key encoding basefontname vg&newbasefont font
+/vg&newbasefont {
+findfont dup length dict copy
+  begin
+    currentdict /FID undef
+    /Encoding exch def
+    dup /FontName exch def
+    currentdict
+  end
+definefont
+} def
+
+% usage: key encoding basefontname vg&newskewedbasefont font
+/vg&newskewedbasefont {
+findfont dup length dict copy
+  begin
+    currentdict /FID undef
+    /Encoding exch def
+    dup /FontName exch def
+    exch FontMatrix exch matrix concatmatrix /FontMatrix exch def
+    currentdict
+  end
+definefont
+} def
+
+% usage: basekey suffix vg&nconcat name
+/vg&nconcat {
+  2 {dup length string cvs exch} repeat
+  dup length 3 -1 roll dup length 3 -1 roll add string
+  dup 0 4 -1 roll dup length 5 1 roll putinterval
+  dup 4 -2 roll exch putinterval cvn
+} def
+
+%usage: fontname vg&skewmatrix matrix
+/vg&skewmatrix {
+findfont dup /FontInfo known
+  {
+    /FontInfo get dup /ItalicAngle known
+    {
+      [ 1 0 4 -1 roll /ItalicAngle get neg dup sin exch cos div 1 0 0 ]
+    }
+    {pop matrix} ifelse
+  }
+  {pop matrix} ifelse
+} def
+
+% usage: newfontname basefontname vg&newcompositefont --
+/vg&newcompositefont {
+/vg&fstyle exch def
+/vg&bfont exch def
+/vg&fname exch def
+<<
+/FontStyleBits vg&fstyle
+/FontType 0
+/FontMatrix matrix
+/FontName vg&fname
+/FMapType 2
+/Encoding [ 0 1 255 {pop 6} for ]
+          dup 16#00 0 put % Latin
+          dup 16#03 1 put % Greek
+          dup 16#20 2 put % Punctuation
+          dup 16#21 3 put % Arrows
+          dup 16#22 4 put % MathOps
+          dup 16#27 5 put % Dingbats
+
+/FDepVector [
+vg&bfont /-UC-Latin vg&nconcat UCLatinEncoding
+vg&bfont vg&newbasefont
+
+vg&bfont vg&skewmatrix
+vg&bfont /-UC-Greek vg&nconcat UCGreekEncoding
+/Symbol vg&newskewedbasefont
+
+vg&bfont /-UC-Punctuation vg&nconcat UCPunctuationEncoding
+vg&bfont vg&newbasefont
+
+/Arrows-UC findfont
+/MathOps-UC findfont
+/Dingbats-UC findfont
+/Undefined-UC findfont ]
+>>
+vg&fname exch definefont pop
+} def
+
+% Null encoding vector (all elements set to .notdef)
+/NullEncoding [ 256 {/.notdef} repeat ] def
+
+% Unicode Latin encoding (unicode codes \u0000-\u00ff)
+/UCLatinEncoding
+  ISOLatin1Encoding dup length array copy
+  dup 16#60 /grave put
+  [ 16#90 16#91 16#92 16#93 16#94 16#95 16#96
+    16#97 16#98 16#9a 16#9b 16#9d 16#9e 16#9f
+  ] vg&undef
+  def
+
+% Unicode Greek encoding (unicode codes \u0370-\u03ff)
+/UCGreekEncoding
+  NullEncoding dup length array copy
+  << 16#91 /Alpha    16#92 /Beta      16#93 /Gamma    16#94 /Delta
+     16#95 /Epsilon  16#96 /Zeta      16#97 /Eta      16#98 /Theta
+     16#99 /Iota     16#9a /Kappa     16#9b /Lambda   16#9c /Mu
+     16#9d /Nu       16#9e /Xi        16#9f /Omicron  16#a0 /Pi
+     16#a1 /Rho      16#a3 /Sigma     16#a4 /Tau      16#a5 /Upsilon
+     16#a6 /Phi      16#a7 /Chi       16#a8 /Psi      16#a9 /Omega
+     16#b1 /alpha    16#b2 /beta      16#b3 /gamma    16#b4 /delta
+     16#b5 /epsilon  16#b6 /zeta      16#b7 /eta      16#b8 /theta
+     16#b9 /iota     16#ba /kappa     16#bb /lambda   16#bc /mu
+     16#bd /nu       16#be /xi        16#bf /omicron  16#c0 /pi
+     16#c1 /rho      16#c2 /sigma1    16#c3 /sigma    16#c4 /tau
+     16#c5 /upsilon  16#c6 /phi1      16#c7 /chi      16#c8 /psi
+     16#c9 /omega    16#7e /semicolon 16#87 /dotmath  16#d1 /theta1
+     16#d2 /Upsilon1 16#d5 /phi       16#d6 /omega1
+  >> vg&redef
+  def
+
+% Unicode punctuation encoding (unicode codes \u2000-\u206f)
+/UCPunctuationEncoding
+  NullEncoding dup length array copy
+  << 16#10 /hyphen          16#11 /hyphen              16#12 /endash
+     16#13 /emdash          16#18 /quoteleft           16#19 /quoteright
+     16#1a /quotesinglbase  16#1b /quotesingle         16#1c /quotedblleft
+     16#1d /quotedblright   16#1e /quotedblbase        16#1f /quotedbl
+     16#20 /dagger          16#21 /daggerdbl           16#22 /bullet
+     16#24 /period          16#26 /ellipsis            16#27 /periodcentered
+     16#30 /perthousand     16#44 /fraction
+     16#70 /zerosuperior    16#74 /foursuperior        16#75 /fivesuperior
+     16#76 /sixsuperior     16#77 /sevensuperior       16#78 /eightsuperior
+     16#79 /ninesuperior    16#7b /hyphensuperior      16#7d /parenleftsuperior
+     16#7e /parenrightsuperior
+     16#80 /zeroinferior    16#84 /fourinferior        16#85 /fiveinferior
+     16#81 /oneinferior     16#82 /twoinferior         16#83 /threeinferior
+     16#86 /sixinferior     16#87 /seveninferior       16#88 /eightinferior
+     16#89 /nineinferior    16#8b /hypheninferior      16#8d /parenleftinferior
+     16#8e /parenrightinferior
+  >> vg&redef
+  def
+
+% Unicode mathematical operators encoding (unicode codes \u2200-\u22ff)
+/UCMathOpsEncoding
+  NullEncoding dup length array copy
+  << 16#00 /universal       16#02 /partialdiff         16#03 /existential
+     16#05 /emptyset        16#06 /Delta               16#07 /gradient
+     16#08 /element         16#09 /notelement          16#0b /suchthat
+     16#0f /product         16#11 /summation           16#12 /minus
+     16#15 /fraction        16#17 /asteriskmath        16#19 /bullet
+     16#1a /radical         16#1d /proportional        16#1e /infinity
+     16#20 /angle           16#23 /bar                 16#27 /logicaland
+     16#28 /logicalor       16#29 /intersection        16#2a /union
+     16#2b /integral        16#34 /therefore           16#36 /colon
+     16#3c /similar         16#45 /congruent           16#48 /approxequal
+     16#60 /notequal        16#61 /equivalence         16#64 /lessequal
+     16#65 /greaterequal    16#82 /propersubset        16#83 /propersuperset
+     16#86 /reflexsubset    16#87 /reflexsuperset      16#95 /circleplus
+     16#97 /circlemultiply  16#a5 /perpendicular       16#03 /existential
+     16#c0 /logicaland      16#c1 /logicalor           16#c2 /intersection
+     16#c3 /union           16#c4 /diamond             16#c5 /dotmath
+  >> vg&redef
+  def
+
+% Unicode arrows encoding (unicode codes \u2190-\u21ff)
+% Also includes those "Letterlike" unicode characters
+% which are available in the symbol font. (unicode codes \u2100-\u214f)
+/UCArrowsEncoding
+  NullEncoding dup length array copy
+  << 16#11 /Ifraktur        16#1c /Rfraktur            16#22 /trademarkserif
+     16#35 /aleph
+     16#90 /arrowleft       16#91 /arrowup             16#92 /arrowright
+     16#93 /arrowdown       16#94 /arrowboth           16#d0 /arrowdblleft
+     16#d1 /arrowdblup      16#d2 /arrowdblright       16#d3 /arrowdbldown
+     16#d4 /arrowdblboth
+  >> vg&redef
+  def
+
+/ZapfDingbats findfont /Encoding get
+dup length array copy /UCDingbatsEncoding exch def
+16#20 1 16#7f {
+  dup 16#20 sub exch
+  UCDingbatsEncoding exch get
+  UCDingbatsEncoding 3 1 roll put
+} for
+16#a0 1 16#ff {
+  dup 16#40 sub exch
+  UCDingbatsEncoding exch get
+  UCDingbatsEncoding 3 1 roll put
+} for
+UCDingbatsEncoding [ 16#c0 1 16#ff {} for ] vg&undef
+[ 16#00  16#05 16#0a 16#0b  16#28 16#4c 16#4e  16#53 16#54 16#55  16#57 16#5f
+  16#60  16#68 16#69 16#6a  16#6b 16#6c 16#6d  16#6e 16#6f 16#70  16#71 16#72
+  16#73  16#74 16#75 16#95  16#96 16#97 16#b0  16#bf
+] vg&undef pop
+
+% Define the base fonts which don't change.
+/Undefined-UC NullEncoding       /Helvetica    vg&newbasefont pop
+/MathOps-UC   UCMathOpsEncoding  /Symbol       vg&newbasefont pop
+/Arrows-UC    UCArrowsEncoding   /Symbol       vg&newbasefont pop
+/Dingbats-UC  UCDingbatsEncoding /ZapfDingbats vg&newbasefont pop
+
+% Make the SansSerif composite fonts.
+/SansSerif /Helvetica 16#00 vg&newcompositefont
+/SansSerif-Bold /Helvetica-Bold 16#01 vg&newcompositefont
+/SansSerif-Italic /Helvetica-Oblique 16#02 vg&newcompositefont
+/SansSerif-BoldItalic /Helvetica-BoldOblique 16#03 vg&newcompositefont
+
+% Make the Serif composite fonts.
+/Serif /Times-Roman 16#00 vg&newcompositefont
+/Serif-Bold /Times-Bold 16#01 vg&newcompositefont
+/Serif-Italic /Times-Italic 16#02 vg&newcompositefont
+/Serif-BoldItalic /Times-BoldItalic 16#03 vg&newcompositefont
+
+% Make the Monospaced composite fonts.
+/Monospaced /Courier 16#00 vg&newcompositefont
+/Monospaced-Bold /Courier-Bold 16#01 vg&newcompositefont
+/Monospaced-Italic /Courier-Oblique 16#02 vg&newcompositefont
+/Monospaced-BoldItalic /Courier-BoldOblique 16#03 vg&newcompositefont
+
+% Make the Dialog composite fonts.
+/Dialog /Helvetica 16#00 vg&newcompositefont
+/Dialog-Bold /Helvetica-Bold 16#01 vg&newcompositefont
+/Dialog-Italic /Helvetica-Oblique 16#02 vg&newcompositefont
+/Dialog-BoldItalic /Helvetica-BoldOblique 16#03 vg&newcompositefont
+
+% Make the DialogInput composite fonts.
+/DialogInput /Courier 16#00 vg&newcompositefont
+/DialogInput-Bold /Courier-Bold 16#01 vg&newcompositefont
+/DialogInput-Italic /Courier-Oblique 16#02 vg&newcompositefont
+/DialogInput-BoldItalic /Courier-BoldOblique 16#03 vg&newcompositefont
+
+% Make the Typewriter composite fonts (JDK 1.1 only).
+/Typewriter /Courier 16#00 vg&newcompositefont
+/Typewriter-Bold /Courier-Bold 16#01 vg&newcompositefont
+/Typewriter-Italic /Courier-Oblique 16#02 vg&newcompositefont
+/Typewriter-BoldItalic /Courier-BoldOblique 16#03 vg&newcompositefont
+
+
+/cfontH {
+ dup /fontsize exch def /SansSerif exch sf
+ /vg&fontstyles [{cfontH} {cfontHB} {cfontHI} {cfontHBI}] def
+} def
+/cfontHB {
+  dup /fontsize exch def /SansSerif-Bold exch sf
+ /vg&fontstyles [{cfontH} {cfontHB} {cfontHI} {cfontHBI}] def
+} def
+/cfontHI {
+ dup /fontsize exch def /SansSerif-Italic exch sf
+ /vg&fontstyles [{cfontH} {cfontHB} {cfontHI} {cfontHBI}] def
+} def
+/cfontHBI {
+ dup /fontsize exch def /SansSerif-BoldItalic exch sf
+ /vg&fontstyles [{cfontH} {cfontHB} {cfontHI} {cfontHBI}] def
+} def
+
+/cfontT {
+ dup /fontsize exch def /Serif exch sf
+ /vg&fontstyles [{cfontT} {cfontTB} {cfontTI} {cfontTBI}] def
+} def
+/cfontTB {
+ dup /fontsize exch def /Serif-Bold exch sf
+ /vg&fontstyles [{cfontT} {cfontTB} {cfontTI} {cfontTBI}] def
+} def
+/cfontTI {
+ dup /fontsize exch def /Serif-Italic exch sf
+ /vg&fontstyles [{cfontT} {cfontTB} {cfontTI} {cfontTBI}] def
+} def
+/cfontTBI {
+ dup /fontsize exch def /Serif-BoldItalic exch sf
+ /vg&fontstyles [{cfontT} {cfontTB} {cfontTI} {cfontTBI}] def
+} def
+
+/cfontC {
+ dup /fontsize exch def /Typewriter exch sf
+ /vg&fontstyles [{cfontC} {cfontCB} {cfontCI} {cfontCBI}] def
+} def
+/cfontCB {
+ dup /fontsize exch def /Typewriter-Bold exch sf
+ /vg&fontstyles [{cfontC} {cfontCB} {cfontCI} {cfontCBI}] def
+} def
+/cfontCI {
+ dup /fontsize exch def /Typewriter-Italic exch sf
+ /vg&fontstyles [{cfontC} {cfontCB} {cfontCI} {cfontCBI}] def
+} def
+/cfontCBI {
+ dup /fontsize exch def /Typewriter-BoldItalic exch sf
+ /vg&fontstyles [{cfontC} {cfontCB} {cfontCI} {cfontCBI}] def
+} def
+
+% Darken or lighten the current color.
+/darken {0.7 exch exp 3 copy
+         q 4 -1 roll vg&C
+         currentrgbcolor 3 {4 -2 roll mul} repeat
+         3 array astore Q} def
+
+/displayColorMap
+<< /Cr   [1.00 0.00 0.00]       /Cg     [0.00 1.00 0.00]
+   /Cb   [0.00 0.00 1.00]       /Cc     [1.00 0.00 0.00 0.00]
+   /Cm   [0.00 1.00 0.00 0.00]  /Cy     [0.00 0.00 1.00 0.00]
+   /Co   [1.00 0.78 0.00]       /Cp     [1.00 0.67 0.67]
+   /Cw   [1   ]                 /Cgrl   [0.75]
+   /Cgr  [0.50]                 /Cgrd   [0.25]
+   /Ck   [0   ]
+   /CGr  [1.00 0.00 0.00]       /CGg    [0.00 1.00 0.00]
+   /CGb  [0.00 0.00 1.00]       /CGc    [1.00 0.00 0.00 0.00]
+   /CGm  [0.00 1.00 0.00 0.00]  /CGy    [0.00 0.00 1.00 0.00]
+   /CGo  [1.00 0.78 0.00]       /CGp    [1.00 0.67 0.67]
+   /CGw  [1   ]                 /CGgrl  [0.75]
+   /CGgr [0.50]                 /CGgrd  [0.25]
+   /CGk  [0   ]
+   /CIr  [1.00 0.00 0.00]       /CIg    [0.00 1.00 0.00]
+   /CIb  [0.00 0.00 1.00]       /CIc    [1.00 0.00 0.00 0.00]
+   /CIm  [0.00 1.00 0.00 0.00]  /CIy    [0.00 0.00 1.00 0.00]
+   /CIo  [1.00 0.78 0.00]       /CIp    [1.00 0.67 0.67]
+   /CIw  [1   ]                 /CIgrl  [0.75]
+   /CIgr [0.50]                 /CIgrd  [0.25]
+   /CIk  [0   ]
+>> def
+
+/printColorMap
+<< /Cr   [1.00 0.33 0.33]       /Cg     [0.33 1.00 0.33]
+   /Cb   [0.33 0.33 1.00]       /Cc     [1.00 0.00 0.00 0.00]
+   /Cm   [0.00 1.00 0.00 0.00]  /Cy     [0.00 0.00 1.00 0.00]
+   /Co   [1.00 0.78 0.00]       /Cp     [1.00 0.67 0.67]
+   /Cw   [1   ]                 /Cgrl   [0.75]
+   /Cgr  [0.50]                 /Cgrd   [0.25]
+   /Ck   [0   ]
+   /CGr  [1.00 0.33 0.33]       /CGg    [0.33 1.00 0.33]
+   /CGb  [0.33 0.33 1.00]       /CGc    [1.00 0.00 0.00 0.00]
+   /CGm  [0.00 1.00 0.00 0.00]  /CGy    [0.00 0.00 1.00 0.00]
+   /CGo  [1.00 0.78 0.00]       /CGp    [1.00 0.67 0.67]
+   /CGw  [1   ]                 /CGgrl  [0.75]
+   /CGgr [0.50]                 /CGgrd  [0.25]
+   /CGk  [0   ]
+   /CIr  [1.00 0.33 0.33]       /CIg    [0.33 1.00 0.33]
+   /CIb  [0.33 0.33 1.00]       /CIc    [1.00 0.00 0.00 0.00]
+   /CIm  [0.00 1.00 0.00 0.00]  /CIy    [0.00 0.00 1.00 0.00]
+   /CIo  [1.00 0.78 0.00]       /CIp    [1.00 0.67 0.67]
+   /CIw  [1   ]                 /CIgrl  [0.75]
+   /CIgr [0.50]                 /CIgrd  [0.25]
+   /CIk  [0   ]
+>> def
+
+/grayColorMap
+<< /Cr   [0   ]                 /Cg     [0   ]
+   /Cb   [0   ]                 /Cc     [0   ]
+   /Cm   [0   ]                 /Cy     [0   ]
+   /Co   [0   ]                 /Cp     [0   ]
+   /Cw   [0   ]                 /Cgrl   [0   ]
+   /Cgr  [0   ]                 /Cgrd   [0   ]
+   /Ck   [0   ]
+   /CGr  [0.75]                 /CGg    [1   ]
+   /CGb  [0.50]                 /CGc    [0.75]
+   /CGm  [0.50]                 /CGy    [1   ]
+   /CGo  [0.75]                 /CGp    [1   ]
+   /CGw  [0   ]                 /CGgrl  [0.25]
+   /CGgr [0.50]                 /CGgrd  [0.75]
+   /CGk  [1   ]
+   /CIr  [1   ]                 /CIg    [1   ]
+   /CIb  [1   ]                 /CIc    [1   ]
+   /CIm  [1   ]                 /CIy    [1   ]
+   /CIo  [1   ]                 /CIp    [1   ]
+   /CIw  [1   ]                 /CIgrl  [1   ]
+   /CIgr [1   ]                 /CIgrd  [1   ]
+   /CIk  [1   ]
+>> def
+
+/bwColorMap
+<< /Cr   [0   ]                 /Cg     [0   ]
+   /Cb   [0   ]                 /Cc     [0   ]
+   /Cm   [0   ]                 /Cy     [0   ]
+   /Co   [0   ]                 /Cp     [0   ]
+   /Cw   [0   ]                 /Cgrl   [0   ]
+   /Cgr  [0   ]                 /Cgrd   [0   ]
+   /Ck   [0   ]
+   /CGr  [1   ]                 /CGg    [1   ]
+   /CGb  [1   ]                 /CGc    [1   ]
+   /CGm  [1   ]                 /CGy    [1   ]
+   /CGo  [1   ]                 /CGp    [1   ]
+   /CGw  [0   ]                 /CGgrl  [1   ]
+   /CGgr [1   ]                 /CGgrd  [1   ]
+   /CGk  [1   ]
+   /CIr  [1   ]                 /CIg    [1   ]
+   /CIb  [1   ]                 /CIc    [1   ]
+   /CIm  [1   ]                 /CIy    [1   ]
+   /CIo  [1   ]                 /CIp    [1   ]
+   /CIw  [1   ]                 /CIgrl  [1   ]
+   /CIgr [1   ]                 /CIgrd  [1   ]
+   /CIk  [1   ]
+>> def
+
+%
+% The following routines handle the alignment of and printing of
+% tagged strings.
+%
+
+% Predefine the bounding box values.
+/bbllx 0 def /bblly 0 def /bburx 0 def /bbury 0 def
+
+% This routine pops the first unicode character off of a string and returns
+% the remainder of the string, the character code of first character,
+% and a "true" if the string was non-zero length.
+% <string>      popfirst <remaining string> <true>
+% <null string> popfirst <false>
+/popfirst {
+  dup length 1 gt
+    {dup 0 get /vg&fbyte exch def
+     dup 1 get /vg&cbyte exch def
+     dup length 2 sub 2 exch getinterval true}
+    {pop false} ifelse
+} def
+
+% This routine shows a single unicode character given the font and
+% character codes.
+% <font code> <char code> unicharshow --
+/unicharshow {
+  2 string
+  dup 0 5 -1 roll put
+  dup 1 4 -1 roll put
+  internalshow
+} def
+
+% This is an internal routine to alternate between determining the
+% bounding box for stringsize and showing the string for recshow.
+% <string> internalshow --
+/internalshow {show} def
+
+% This is an internal routine to alternate between determining the
+% bounding box for stringsize and stroking various ornaments.
+% <string> internalstroke --
+/internalstroke {S} def
+
+% Sets up internalshow to use the null device to determine string size.
+% -- nullinternalshow --
+/nullinternalshow {/internalshow {false charpath flattenpath
+                                  pathbbox updatebbox} def} def
+
+% Sets up internalstroke to use the null device to determine string size.
+% -- nullinternalstroke --
+/nullinternalstroke {
+ /internalstroke {flattenpath pathbbox updatebbox} def} def
+
+% This routine tests to see if the character code matches the first
+% character of a string.
+% <char code> <string> testchar <char code> <true or false>
+/testchar {exch dup 3 -1 roll 0 get eq} def
+
+% Raise the text baseline for superscripts.
+% -- raise --
+/raise {
+  0 fontsize 2 div rmoveto
+  /fontsize fontsize 2 mul 3 div def
+  currentfont /FontName get fontsize sf
+} def
+
+% Un-raise the text baseline for superscripts.
+% -- unraise --
+/unraise {
+  /fontsize fontsize 1.5 mul def
+  0 fontsize 2 div neg rmoveto
+} def
+
+% Lower the text baseline for subscripts.
+% -- lower --
+/lower {
+  0 fontsize 3 div neg rmoveto
+  /fontsize fontsize 2 mul 3 div def
+  currentfont /FontName get fontsize sf
+} def
+
+% Un-lower the text baseline for subscripts.
+% -- unlower --
+/unlower {
+  /fontsize fontsize 1.5 mul def
+  0 fontsize 3 div rmoveto
+} def
+
+% Compare the top two elements on the stack and leave only the
+% larger one.
+/maxval {2 copy gt {pop} {exch pop} ifelse} def
+
+% Tokenize a string.  Do not use the usual PostScript token because
+% parentheses will not be interpreted correctly because of rescanning
+% of the string.
+/vg&token {/vg&string exch def /vg&index -1 def /vg&level 0 def
+0 2 vg&string length 2 sub {
+  dup dup 1 add exch vg&string exch get 8 bitshift vg&string 3 -1 roll get or
+  dup 16#f0fe eq {pop 1}{16#f0ff eq {-1}{0} ifelse} ifelse
+  /vg&level exch vg&level add def
+  vg&level 0 eq {/vg&index exch def exit} if pop
+} for
+vg&index 0 ge {
+  vg&string vg&index 2 add dup vg&string length exch sub getinterval
+  vg&index 2 gt {vg&string 2 vg&index 2 sub getinterval}{()} ifelse
+  true}
+{false} ifelse
+} bind def
+
+% Recursively show an unicode string.
+% <string> recshow --
+/recshow {
+  popfirst
+  {
+    % Test to see if this is a string attribute.
+    vg&fbyte 16#f0 and 16#e0 eq
+    {
+      q
+
+      % Font style.
+      currentfont dup /FontStyleBits known {/FontStyleBits get}{pop 0} ifelse
+      vg&cbyte or vg&fontstyles exch get fontsize exch exec
+
+      vg&token pop recshow currentpoint Q m recshow
+    }
+    {
+      vg&fbyte 16#F8 and 16#F0 eq {
+
+        % Superscript and/or subscript.
+        vg&cbyte 16#00 eq {
+          vg&token pop exch vg&token pop 3 -1 roll
+          q raise recshow unraise currentpoint pop Q exch
+          q lower recshow unlower currentpoint pop Q
+          maxval currentpoint exch pop m recshow } if
+
+        % Strikeout.
+        vg&cbyte 16#01 eq {
+          vg&token pop currentpoint 3 -1 roll recshow
+          q 0 J vg&underline vg&uthick w
+          currentpoint 4 -2 roll fontsize 3 div add moveto
+          fontsize 3 div add lineto internalstroke Q
+          recshow} if
+
+        % Underline.
+        vg&cbyte 16#02 eq {
+          vg&token pop currentpoint 3 -1 roll recshow
+          q 0 J vg&underline vg&uthick w
+          currentpoint 4 -2 roll vg&uoffset add moveto
+          vg&uoffset add lineto internalstroke Q
+          recshow} if
+
+        % Dashed underline.
+        vg&cbyte 16#03 eq {
+          vg&token pop currentpoint 3 -1 roll recshow
+          q 0 J [ vg&uthick 5 mul vg&uthick 2 mul] 0 d
+          vg&underline vg&uthick w
+          currentpoint 4 -2 roll vg&uoffset add moveto
+          vg&uoffset add lineto internalstroke Q
+          recshow} if
+
+        % Dotted underline.
+        vg&cbyte 16#04 eq {
+          vg&token pop currentpoint 3 -1 roll recshow
+          q 1 J [ 0 vg&uthick 3 mul] 0 d
+          vg&underline vg&uthick w
+          currentpoint 4 -2 roll vg&uoffset add moveto
+          vg&uoffset add lineto internalstroke Q
+          recshow} if
+
+        % Thick underline.
+        vg&cbyte 16#05 eq {
+          vg&token pop currentpoint 3 -1 roll recshow
+          q 0 J vg&underline vg&uthick 2 mul w
+          currentpoint 4 -2 roll vg&uoffset vg&uthick 2 div sub add moveto
+          vg&uoffset vg&uthick 2 div sub add lineto internalstroke Q
+          recshow} if
+
+        % Gray thick underline.
+        vg&cbyte 16#06 eq {
+          vg&token pop currentpoint 3 -1 roll recshow
+          q 0 J vg&underline vg&uthick 2 mul w 0.5 setgray
+          currentpoint 4 -2 roll vg&uoffset vg&uthick 2 div sub add moveto
+          vg&uoffset vg&uthick 2 div sub add lineto internalstroke Q
+          recshow} if
+
+        % Overbar.
+        vg&cbyte 16#07 eq {
+          vg&token pop dup stringsize relative 4 1 roll pop pop exch
+          3 -1 roll recshow
+          q 0 J vg&underline vg&uthick w
+          vg&uoffset neg add dup currentpoint pop exch m l internalstroke Q
+          recshow} if
+      }
+      {
+        vg&fbyte vg&cbyte unicharshow recshow
+      } ifelse
+    } ifelse
+  } if
+} def
+
+% Get the underline position and thickness from the current font.
+/vg&underline {
+
+currentfont dup /FontType get 0 eq {/FDepVector get 0 get} if
+dup dup /FontInfo known {
+  /FontInfo get dup
+  dup /UnderlinePosition known {
+    /UnderlinePosition get /vg&uoffset exch def
+  }
+  {
+    pop /vg&uoffset 0 def
+  } ifelse
+  dup /UnderlineThickness known {
+    /UnderlineThickness get /vg&uthick exch def
+  }
+  {
+    pop /vg&uthick 0 def
+  } ifelse
+}
+{
+  pop /vg&uoffset 0 def /vg&uthick 0 def
+} ifelse
+/FontMatrix get
+currentfont dup /FontType get 0 eq
+{/FontMatrix get matrix concatmatrix}{pop} ifelse
+dup 0 vg&uoffset 3 -1 roll transform /vg&uoffset exch def pop
+0 vg&uthick 3 -1 roll transform /vg&uthick exch def pop
+} def
+
+% Make a frame with the coordinates on the stack.
+% <llx> <lly> <urx> <ury> frame --
+/frame {4 copy m 3 1 roll exch l 4 -2 roll l l h} def
+
+% Resets the accumulated bounding box to a degenerate box at the
+% current point.
+% -- resetbbox --
+/resetbbox {
+  currentpoint 2 copy
+  /bbury exch def
+  /bburx exch def
+  /bblly exch def
+  /bbllx exch def
+} def
+
+% Update the accumulated bounding box.
+% <llx'> <lly'> <urx'> <ury'> updatebbox --
+/updatebbox {
+  dup bbury gt {/bbury exch def} {pop} ifelse
+  dup bburx gt {/bburx exch def} {pop} ifelse
+  dup bblly lt {/bblly exch def} {pop} ifelse
+  dup bbllx lt {/bbllx exch def} {pop} ifelse
+} def
+
+% Set the bounding box to the values on the stack.
+% <llx'> <lly'> <urx'> <ury'> updatebbox --
+/restorebbox {
+  /bbury exch def /bburx exch def /bblly exch def /bbllx exch def
+} def
+
+% Push the accumulated bounding box onto the stack.
+% -- pushbbox <llx> <lly> <urx> <ury>
+/pushbbox {bbllx bblly bburx bbury} def
+
+% Make the relative bounding box relative to the currentpoint.
+% <llx'> <lly'> <urx'> <ury'> inflate <llx> <lly> <urx> <ury>
+/inflate {
+  2 {fontsize 0.2 mul add 4 1 roll} repeat
+  2 {fontsize 0.2 mul sub 4 1 roll} repeat
+} def
+
+% Make the relative bounding box relative to the currentpoint.
+% <llx'> <lly'> <urx'> <ury'> relative <llx> <lly> <urx> <ury>
+/relative {
+  currentpoint 3 -1 roll add 3 1 roll add exch 4 2 roll
+  currentpoint 3 -1 roll add 3 1 roll add exch 4 2 roll
+} def
+
+% Returns the size of a string appropriate for recshow.
+% <string> stringsize <llx> <lly> <urx> <ury>
+/stringsize {
+  pushbbox /internalshow load /internalstroke load 7 -1 roll
+  q
+  nulldevice 0 0 m
+  nullinternalshow nullinternalstroke
+  resetbbox
+  recshow
+  /internalstroke exch def /internalshow exch def
+  pushbbox 8 -4 roll restorebbox
+  Q
+} def
+
+% Calculate values for string positioning.
+/calcval {4 copy
+  3 -1 roll sub /widy exch def sub neg /widx exch def
+  pop pop /dy exch def /dx exch def} def
+
+% Utilities to position a string.
+% First letter (U=upper, C=center, B=baseline, L=lower)
+% Second letter (L=left, C=center, R=right)
+/align [
+{calcval dx neg widy dy add neg rmoveto} % UL
+{calcval dx neg widy 2 div dy add neg rmoveto} % CL
+{calcval dx neg 0 rmoveto} % BL
+{calcval dx neg dy neg rmoveto} % LL
+{calcval widx dx add neg widy dy add neg rmoveto} % UR
+{calcval widx dx add neg widy 2 div dy add neg rmoveto} % CR
+{calcval widx dx add neg 0 rmoveto} % BR
+{calcval widx dx add neg dy neg rmoveto} % LR
+{calcval widx 2 div dx add neg widy dy add neg rmoveto} % UC
+{calcval widx 2 div dx add neg widy 2 div dy add neg rmoveto} % CC
+{calcval widx 2 div dx add neg 0 rmoveto} % BC
+{calcval widx 2 div dx add neg dy neg rmoveto} % LC
+] def
+
+/vg&str {m q 1 -1 scale dup stringsize 4 copy align 11 -1 roll get exec
+         q inflate relative frame exch exec Q recshow Q} def
+
+end /procDict exch def
+%%EndProlog
+
+%%BeginSetup
+save
+procDict begin
+printColorMap begin
+595 791 setpagesize
+20 20 20 20 setmargins
+0 0 setorigin
+1420 872 setsize
+fittopage
+portrait
+imagescale
+cliptobounds
+setbasematrix
+/Helvetica 10 sf
+defaultGraphicsState
+%%EndSetup
+
+.200000 .200000 .200000 RG
+[ 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 ] defaultmatrix matrix concatmatrix setmatrix
+cliprestore
+1.00000 1.00000 1.00000 RG
+newpath
+0.00000 0.00000 m
+1420.00 0.00000 l
+1420.00 872.000 l
+0.00000 872.000 l
+0.00000 0.00000 l
+h
+f
+.200000 .200000 .200000 RG
+.200000 .200000 .200000 RG
+[ 1.00000 0.00000 0.00000 1.00000 0.00000 0.00000 ] defaultmatrix matrix concatmatrix setmatrix
+cliprestore
+1.00000 1.00000 1.00000 RG
+newpath
+0.00000 0.00000 m
+1420.00 0.00000 l
+1420.00 872.000 l
+0.00000 872.000 l
+0.00000 0.00000 l
+h
+f
+.200000 .200000 .200000 RG
+q
+cliprestore
+0 0 1420 872 rc
+q
+1.00000 1.00000 1.00000 RG
+newpath
+0.00000 0.00000 m
+1420.00 0.00000 l
+1420.00 872.000 l
+0.00000 872.000 l
+0.00000 0.00000 l
+h
+f
+q
+[ 1720.00 0.00000 0.00000 1172.00 0.00000 0.00000 ] concat
+<<
+/ImageType 1
+/Width 1720  /Height 1172
+/BitsPerComponent 8
+/Decode [0 1 0 1 0 1]
+/ImageMatrix [1720 0 0 1172 0 0]
+/DataSource currentfile /ASCII85Decode filter /FlateDecode filter 
+>> image
+Gb"-V%pTfkir=#4ICoAZB:%L;m\5a-ki+3E/M*[0o(#O%]rWG)^KK5e.Z+:F!iCVO5oc^:BrDj[";1nA
+$:5Hl(1De-.Y!,uec8oG!g;U=(Z51>A?KY$?'aU@0(=0Nk.tPpSK2<T5!/B3]UASS7KWVjzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzQq)@EG=
++_b9he>nA`]%!8!HX-5,4:(P%%p2j^7WMnd<*4;,L3Dj33oI%6_r6i;`k.H*jrcLmiidV%OMqZEc6bWf
+WL2,q9GIaiU80&KMn*l,UZX_Og'^?soWa:Mc*!Zo#<+,&/dj:PbH5H[EB85;W??!&+b9MY`/C-ZX9L'+
+tqRC3ac;Yc)\kG^-;r]ipANRe`7$>=?G7<8Dmo#S.t=-qAku>b3R6.95)sU8$_K^8TA9`JT@&>II5*iJ
+WQ@T88Ph([htg"gOTWiaPco=0'l2NK*)W8,rX_DscrZU0^]&>qN&li`)M5PEVT00$`pJOceX.n*f`6j5
+VB0rdK<F@U,oJL`1l45u\\sRR;OQ^3F-Z8P/%<lK[XQqBF05C(Atj&?,jH&J5Tn)X?_W/cKj:Gds\dLh
+]CV;3=JIC2IfFpBC^"!!(6?]=V9H[RK"VeD!F"4?,=Q_o!]A+CONdXXP\JU1QU[d@>;I_3m)l`8;;pG,
+\1ZlLpqjY8pfX]=Wt>^4'ap<%>jkjNA7:n,iYE9U_H?V*n'X,fIf+^@k>d=YF!f9VG9R!T8tY4/?'hEc
+Z<@b[k?se^`444]@7gLSudE3H?B.4^HQh7#aO\6]?h)LKI,cFoVLB^mHK!]h5,!e;",."$Jb/`(s6Q(\
+RKrU8"*FRa02RF0D79%,M+=[88%k,".V_Zr!R!'Z<f3)FZAd^.(u6kYZ_Hl)Fin=tLL<=q0WnA-4"/=Z
+VmIeCE)Ll7"DTqgqUrUoeB/jIJ8$g@rJ%Ld!m<(j2YS.DRq-h_]s/?UJ_!N*I)NAQ_(To7]l7;X#0J8'
+u$MLNHSI5(,s<j,$L8:[>c<dbVXohVR\gmd_C4U/E.?r[5E_dT-tg)5S/LMt<q#Xl=tk&gH/l+@Z^Z$i
+p>.0SZsA["s%?W8pT/?83XQ<NF[4?EXqbASBLLMV='I['VZhW@6kcTqS1.p(;/6AN^_7L"t@DHp<i`\h
+7FtM$7e^Kmq?@*ZcBGZtQY@,WIbcB-CKgDDh35V-]W\H^5lK@5T;]0GGN;6aaJE$0a@inK980C%.Tb]A
+JGgU&QbVK;;/o#,\lU,#4IcRn1;\4Sdc@n.71kq`I%M@^3W6'N+c4[NhS#K!jk@;5r"Tq5bs99#AK`jk
+`4t(!uCI6b;Hi]=ZhQkOoK35&:7f+TMKB7_eZjp9M!0P`um0,k:U%Nf&]l.[B]"p#]Sa;+A-rWjaMNjM
+'1M8Ud[tNgcCTrB?Rf:[8Dh`dl@[:7];4>-6@?i(I?moL?EjcZE'WIbK*0^PpUAkflFA1JCS?Vcj6(!!
+!BS.f;o8Empm[X&lKbLks-oa\f$:k$BJ:!._=AX]D?rV>9r_KnkGAH5HN'!rr>:U3(R%()IcW7RejAMW
+j9fMMd;=gI2_T!5PNUC0[Li-/H(Niku/+q$-m"J9b-r=3&A%.hmksLkm9GNXu^&!!%tRp@e33Jq?^d2Y
+m.CUnjg9e^^(7N;rqY0YXL9lLa^j5<lp0d*TG<4Sfiq!!"^VL5(G2qtBj_qhs`B8P+cL<sJ^*!+T8HBB
+PC%8#3%5VPg>QT4\oA!!%rn,pak,2Jid2%MmSQDFOg1!5O\3Bkb]3b4>)mM2[CpW2MEEl2Uea^mN9eb"
+\?`q>:%*'GQWE!WW4.8CZ2?`Q-#GH[@+d-.UW!RsT8X!!$CVPtDc/)<p2APF%V+5LKN3!#VrGZEf:B#X
+:Pggt^]9elHjq%KHJ/#,7ul-7UK;<9eLEEi@Ig!!'fVSXl<DV(s/9+>bp^W2PLk<<*"!`dmp^qUjG&Kg
+LokRnEnq!!!#=F`qrjjlQ=6q<ch>j33oIk$B&.!!!G4qYGM8e+<>.0.SP/pUU>)!5K5h$"7Xd/=d=R!!
+%spQ'IVcJUnCF&Se`-h!5"A!!#YX63mPk0Fi5LG:SqN+!7,NUa.uQ"98E=k=>jZ!!($Lf%/F5jCB>S+/
+Mk,VhG*N!990*&;gf<#pB9K!7Yb+6psFN?slDlKt5e=!!!!D7)$J_1,?/4VT.Dl!rr<$92S_j((_#g'c
+#9IdUMWe!<<,8n1$%Cp@n;/+TqcFJ3f`sSbr-JoC;>_ogX#+$NL/,L.,ZbAQTHt@d\@>!!%O<X/W')%M
+%@#@n1$=UUet[!!!!d7]f]]7Rm7Oqt!Tl!!!"dW4TZG]!/E3TYT@K!WW4.6*)nD(-(rsg<ImenaZ-uIX
+VM4*ouR.!!!#_0==t(()F?$lW,Vh"98F`Qou)KDbes=g:D4[5&Y@XnPbC-fS0G-!5KH#h;+WkS*T+pF7
+A*RF0>rO!.al:\_Q0/-4:]MjFktAN;`\PioB'gS!uom6NI/e?qaJ!eXLkA1c1SH>lXj)b\=HFKG>4:JU
+r@a&J:`]2tC/Z!!!"/gVJLII=-F"MMfWk+ohTCAn1WsTj"RYLkl<F$nNnZ1Y5Y/!!'g%='&H>*#oq=*S
+oT/DXMWJ!!"\T9?miJ>$@)PP'hY)PY*54.ffVM^i8W+lqC/LIdXc0<%=0Df*)-S@&-q;:+5icSW]/Q_b
+'n/!&0R2S2_ZAU,b4or2U_9!/rEDQkTJ%jELV&r]>;iW3<B`pZ;JV!5Nj/gtWk]&[?'!VT-VFF0>rO!5
+JlF[%-VuNB_IjFfDID2"u_*!!'fZQ^=&::ah3ZMp8pZ!!!!D_:!A@hO\p"!!!"X]UG:XJ:N0'KEN?6!W
+W5?4E<agJ2()*Q8el[#\n9r:In"^$k-+9e`L0S!!%OX6r"!f0ZNIA+?:SFb>;#3i8`ir<)dDr'`e:7(b
+S^E.rojbTBA>8'A;2ddk.^qQN(Oahfi^_.fHsJa^npP3V_80IpXHjSm(rkQp0'b?>9DK]cUPWS*S$h1&
+efBs5AsU9^PpC\*$h!cri+a+TPWISm60M,LI8^O:q[LUUn%J^qda=KS7Xr:33TH!!'g]PB+3h(HplkA9
+gXn\TVL27=:MY/+<<*/FCAopA>).aqHhBl&:N4Y770d;gMY'3?\B)/oj8Yd*ge-*ZZ7A)B.>VcsZ9a!<
+<*:@[ENfbuW+#\]1Ec=K_/FcO%R0qm:^G$N_.CA*)1?rGJ5ch;E*1WSjq'5D\$WX*m.)oQL0ZP7n"JjW
+Z&T!'NrNd`9D+Unkra.fo\N0U+1I\)+?0]([j1O$.@KE,3;QNB3cj^4K;3/]i%CGMccj^7/3ZB20k(H9
+V(tOm<>8-'JuDJE7t&"9:f(C23\FrR93C]">Rs?E102<iK'\==F4MJ3g`qgfe*N?[:ULFd"$-T+Q)3C%
+kEukYpoUrq8nR#=l0`(ed#5I/;&I%ki7OCOM$4oNgp7./-Lc-%Tt[m(<7O58`aZ:j^=FKE,Dja9_m?(T
+jgAOcbdbiSfcUNUk$QlKXWb=%5SGQuU(F!!!3mqg$3cT/V)k#"lc<T7(Frj,&P=+=AujF$ICgn6k[d!^
+h3gmC5JX#QR?UjlQ=6q,LBnBR3!30/'M?bEf8:]p]E>!<Bp6UR`'%_E]qg7V7\aaU(HHX'n<hA"gsM!M
+D*re^]+tIYio<;Fi4;=Kt3jC@:`r!!)4)E^IjCNGnM%5TV<^QE)CaMi<V]1\sa88-f_:^\[5raU(HlE^
+Ba[_=?R+h;-nRC%:ifCi+#HpNci?!;$@R+_9Ye0U7pR/[sMUp?Yq3J,^I+]J1rgCtGgq8u5FCqrElRe#
+'*DW`?*#AS5Xoh7@aKN#?^"cAd^=MN*Ud1M>!'++<e8CTm-YZffk??er86-TRm^+t!MD^<!c&CD1?r%m
+TtgB?nrRda6?;EC.%A\$r]M'0jH\G^-`cDO*-b!!(A8:'_^t+\\_t#<qq@K)kuRa,V1hcO&_'j2[5\oV
+Xng,<7bEs8CjTIJMuk^]4<17un]+;oBWoci!]gE^Ir<:'^hh<EE8*>.&+5+UWoiIN#LqX`ec,Za$e*p%
+?SPb#7mDmhOklMO6SWrqqqB'(^Pf!!"^u8Pr/Tg4?os[HScu7deQbSm_-ZWNULm^Fr'"k8`1JmK]@`II
+fp;VYE_X3/3P/_Gj\V?pR)pJ,RuK'c%R6o[-1g=##1%pi2jp:ehK2*&o)&KR%igg+Q#^$%FL*c`WZLOL
+=Pu=m^.k+5N-EPgqk$b?mh(/q2?BTsCiCH/j?.no:($J'QKKNFH-$'4#+E)5KQF>^IMH^3tM,H\]AG_`
+NjJ&:ar,cd*+.$1[NSnFZA&aU,qNio4E%:J"-7Xf_!ep$:Adg'fU0X/da33ni<AHLp:D,J3dP!!#6neD
+)OY](rcr'!_kAgu7n`_C)F7D0,4-=5hmI(HetP2e_dlp,>^\J+ftY4n?NHmkrFHOV<a`jFf3e:[#99qt
+=)tH"H0aSJsM*4E05oo?TZ$ieoJ(o[6A9"U2U$KF^375\t7Q9MCDOZSOW#W6qqe@R$sL^;'TcAad^td!
+,*-gpA8.r`+<"O3?&=hDuiNIl_ZEQ44`S[sKGNpTn%D63%e%]tM+XW9B4"hH7I;[?m63o&\&kW%]>:5c
+n)Ag=iF$VY7P3PtL/ri"-J40`ij6!!&\\;KM.A/)T8:LT?n..R1[0kK$Y):WbhtRPF\X0kgl1T6AO"M4
+#HXqYH("Y"Znd\E;N&'R\b.:,l::'>d_G4I)`B#_+CifIp<5Sc&$BHi<XB-Pah^cqhf6M"7]oibe'#4t
+]dk^OG(a%@L,4V`j3rSneM=AX8%`qjER_d,7"i($E[F!EbRJ[5^60-RC']FEDVKG?7jI^\dH2^:q<3<i
+fE3CtW<Z4Ve_GAE#ApC:1agI9'D"Yc]td!#V>#8kKEt$7[MTlK[Y<>$CQ2\CB<Fh<N87%hD`#X]W4*2q
+Qq@IHI'u7m=D+Qn5,eh>#%"1HuHr^\lWce!)5_r7T#i:TMPCa!u*rR#7DQ>S6jEp$03MF`6E63dLFg.i
+/'G)k'e!jfPT?Q,XQN%VsB5-%"t<$De@%3K7R%`lE""RO$_@9MPl/EnmWa:(*m9lKdapDr*U'p?\rb0%
+1V`kg1J741jA;:^-n"(pKO#S<YU+H@(!cH$QMq[;,O.jU-_$Kbn(JZ=Q[6>[1<1QMhDBX.-6Np3r6M]X
+Hbi`fEoD4lM8KQEB[a[4^Z^FjkbgSblka9QnhJ.t9HS=a#8Bs84YNj"bYlZ&5%_VBRB-=2]PZ9:P,`/&
+%:_0qUWHPTtTDm?bSO;d:"5@HDQK'kVind[i`sp)_kr^T+G>B?gg0I1Js1s7=!D)'#"*M;2I0qT0OP<i
+;#m!jF*L3MCn*kiq=L*Zj1q--r/G4#o<H(fhLSJ01<]nZXq8eM4K\kW<kJN0flt_<8!.X&c@.WOB'PYm
+Pq3HHVfH?@Tj7IWPGs$_CIHe#g+J.l_[]\g\unJ=-+9],Q0N2J7GA2=[]=k>tt4-QK2.$"5<(_Jr$1H,
+iu;L^ls8.Ljuln[;S\%-3'A/4XV=TlsU!A]g5<4N0971""P%FZ@qi!!(\tN@*W_A+D=pE6eS%"b#4_h(
+)R0e5$?OXB>#ZZd5Z%l:]C(]iKWOl.fp'kI!M7dAPcT2'aFp1bWl9R#7DQ>g^\#/R]2@j8R(`]">QZII
+H9a?]Oth>$>+lpPs[*]Y+0tpKCd*c+QCDN"-jK*Tsf"4F'ggWoW@+9?.q13MGO-gM]k]9^M4T0.A>iFE
+AL_cNO<!bVI(!El)88h;'[::c]bnLPNpiN>n@VRl0(n6[g]&qS?fO)GfjM!]M,Z;+FA@L.N>6:-b,p$(
+1E/:]-u7Eg!_S7s=\YWQ2Ee-g9AZ\1P$<r]o!QR:TjM=5UBBT<k09d[tCRrpodnIrU6f)EHbi6;BMC=C
++a99#KEucHa]GIF$0_c2E"Teu^_F6L*Wng/4[,o]aifIZ.AA(mp3t0:ju\R%E*ggrpjuM2BXZg2>TL,t
+NshK"Gf$]Qis6>+D+QL?]&>UVC$+[^Oc<eoj$]/HEknrc=]dAI[eY.cZG<6uJ[0DKltOTho$#SWoA7:a
+cAH!jjU0>ePIVVG3Q6gY8RXUtm`[koVqEW$#sTfFKLAmk;FqffRmsF*ZcWq.FSKOXs5V*hQj(\HA$2]d
+5i)eG/&1m%-ekrN)<TE&?g9ocbV*aU-"AZ'uDqbOk&J+#7Tqd\ZAt8$&!GeaCo1R5<+$m4F[W3.p#!3a
+>opbYh1O/mN)d8rE(h\MsH-l0k=T['\?!_-o;5l2Vq_HR)-WBQiHij$A*AI<p4N^V>8;E,]]4DI[1OFr
+,k5=0IX@M<XHrQKKVCKM64XX#3s+Ish*!^V.HT`H&$WRO?sX-VCqA1h_qGkdaN/>@q$j]:[4*4*)mi]6
+(>EmFgRb"Vp4B#tGXZX'9JPjm:[,i_Yi0S\913eep8U/6]FE[F\^m%hH.TZI0dA-QMg##m"EFm^V;;kF
+[7<^PC[qeC=<ck7>U!*<9VJK?NVh3uWW],X!GAHPl8?)qIHGHTR3Z/M/Q"H$Q*WTmhH>l07GTF`m7JEY
+jG1=0Konbg^n_3?_pBbHKKuc9#A,B'uX^B>:ud_101pMHu#!M>N?_H0_JSV<M,O5E&D%rLuS&01k1_/5
+=R-e!\[<7I,g'PY.eIH2RI-TDnJ\@cZI`K0_dhZ*CRKpr+nna2nWX]q/MNYM\2D4WZ8)2s1?V?b>CdLL
+5F9%"Iim&6#`PNW%%T9JQ*njiMQFZD:!\BTG6W9m?5%'dLJ?HFNN90t@5S_^cPAoXENs<i5AdX5k3.PE
+M*i]*gtm6DXJc2f.+h?eqN+;rP6tGR53Rj8$;CDr*VP(a=tfo!-0O_a>D\N5,,T]C5Iep3uSS-_mH3qg
+7NIfXh-V?cWQD"3\;7JEGh+[(!Ld3H?Ah,!qu"`5fo"<`U-//Nc.#e7T*r$h[jN-\P00q(th"7+YQ2Xn
+7VKoYI1?ko6)]WCicWO&lkR'\C9P=S^`VL%`^IOiJjI\Dok"3MB4JKTZ/T;a:(eb3B[9';LCb:+6(*E^
+D3/e/9V]*;.7!EHF<DrO%mSM;s,R[d^+(Wk\CRfDDJ;IIj\1ph9GX4*)n>n4rlQeG8kA<F:1'qBt//H!
+GaS&"bn4i5@W1o0#;%dLi.WV*3eqk@//fW\`/Vf,O)H/3>pt%O'llioCYkgU:tQ?(C`cph8Q#\R`epSJ
+s&h`tfLS-RU8TDlMU'EMN4d1b:1/lGkY81:6p4'X_EG>@19+U>5u^;cAnE8!;`[I/<L">IJ?^BP7tK,U
+XtcSis\m#:Qu`4_`??$PtGfn$iQ%rBsD:+-7.rEo#R-AS#H#dEr;T+u1oO<,XfZ4,qH;)Y2G/eHTA9Hf
+kJ8LZ-p&k_&SCiedoe!=;8m6+S%le&;$T;Q7SHVP^4[HJ4J^4gEl;mFtunjV9d'I.YfVGOODeqWk?NN0
+=p8H=FY-`-=ceLi;C6kP"$Pf@4.%f:qcIns[Ru]&qW=QAXr($I;>8$s^L0Xf:0V9eG`j9+p=Uj'OW*)Z
+J]cJ?6%0)l7J^R/Z?Lo='"BLdfFP/rtcK6W6pI_+-9e<E3&q%qmXoVJ3uXFhiL$2r\f(gF"aRI=8f>GK
+\)'m^qol\[h?h9&Pg"etHZtV\m*Cr%XcSC3olWs4(1XrUGqu4F6Xul&0\*F'HD.rU?mD!;qA;&3h9b*4
+81g4?5E)ThoRZZme4(J+1u<ZU]W.KU.8>"=+-S"fk\+'$$DQT7(n-RPhgn^)JtH#S.I'Z"(hdn%L;YXg
+YM!n$Rc.KVOpe0?9."G])uX9+m87d3+-idsGsk^3\12c)i!b<i;HaI3X/W?V!;*7f@1!EQo4+IMe^MI-
+/-fBA`OK[-IQXBsr\IT0N$ASf#$5n':6khG'OA^aQ%M&Dhj0h()O-Gl@<e[r'kH.dA\$pu:nk5JM*l3^
+5jDkic\M8&r'H2H,nZ(Dl8mi6\[N)?F5RBE7#sjFj:&I=6NE<gLM8IpcZW(hmf&*3(<S4VB"fZlGS_+D
+GM&=M&bD1..?\?gd%;V4KN#S8]G[qk^%Hm^;:3+h:$A?]1VQX8A[?YHDo*^#mGG>M;+s`"i-`>pR.j^N
+r$AM?T@C.Vrtj]#E]8H2MkL8YAlOVo^$Q(*bajH`+0P8\0hjiS-9fjmVj-a?Z9sJ>EhmFbN.jn@U3I(D
+R[AH!G]<F`eR/<+9=2[C,\,;l<)q`<#U,Bk_9pB^"6^F7&A^mHj2X:GEn3*\O=ZHdr=V#2k#k]u!$03*
+N\rZlD2Q:_YfP5JNGIPa\&0+o`3fNs*Q2/I/0[aF&A_oG]kB=0D2ipV1f+nh>`M5Q0hB;sqAH>hsrjC5
+=NPHMURD*g4:-?[ghj[BneLo+rolR_5C&9$T9KYV\pFG6uBnWbXenrcVpLL%b;j&P=dUZLk3TpWW@-hU
+8ep]c(5Wo^:km%]T>(l3mY^[I)_X)pAW-FD6K<[Ph2gfD5%$f@JLk>XD@fPGb=VBPA(l!Z">/<kGoQg"
+=sPqYFf8AZ9uT='(<"0h"bPhsQYj&p(6g^X3$$J?`8pa9aG'B4kjS;:3ss>J7_`j5]/M.Op2ADj`a$,U
+]r=S0fB5]QphY91LgF_SX1DgY4Bp4:F7/AX?\'o"3dJoJgjMKXj#A["pBp_[gB%Wu:KspiC?g7d_q-c2
+_5\W3<E!oCLEkF`-!E;7hm^Y-+q#THMX8<%&GNNui.PC!lRkKDG?=@Z%S$ou`OMH$0L%JP&O,Ci+%@Y@
+$0kmfDG&*??.P^;ZfR4i6MC82L>DCCD!`E^It!h;)@6;%X`dlg='[)&ZRV<+Ppk,X]H8OWZZXjcDD"]m
+b<Xom$BVQ7'ubaO5Nhah5FU?S7Af*ri@sm_<SZZsF_*VHi4$/&it/4J(L1p%tms&ECEC^N<iA(d:ZQ4c
+PG\=]nnD_860Lk<E%M=s^Y"`'J,#cCNr3oq2&7+XaYnr^<D[X-8^0`&cuAk)S;imDkH_?/r?aP9GFOO^
+cpNkl=&@!PfNpC@;Aq37ad$W<*,&-;U3qET0B+mLqg_9q)n:)VWq%#6C3YW1)Gog8:aEp,T&GFuqZC6p
+sG%^fh0^El*8CgP(3KE55(=o0YnFGOA]tHi&YCG$!DP?T!&q%H68AQ'NI/b[P@&C6FdErVZT1_o%a3V=
+a4F@"aC*TqfWt=S:9iY'KKb;s30O<.4F6lRs<kPR[K/Hn&a<h(r%PIkW;6ZdT^'%oo[U?bFN=p<i@?GN
+Ml+M(5I&BmRP(2YE7e?;3X5jrD::M6Wki]feSEJ((8h>IJ>s-n#YAC3NObB$D7MZXHY2GLp,E?$4[t\(
+l#Io]agX]Bh:-jX3:gah@H*.n5!dlX,P^dIrtgF/JSmkrGHM8d>kJ$k<bB84]\[WuL:T!c?F)!2)!a`P
+m[jM;":1b'+g-(tDkr>_7QZ9Uo7f<nlB`B4YW`lRE>eE^Ikg>3=%sPE_<]dF"XPgXn+eeG0>7Xfc_dRr
+2a-;d\EtZa+IHW>rlR?%'=%(K89Eq=F(=mnN#oV)n\Y!WN)t@RN&sLM>iN;i'mNN$cP+WaJ0>@n`eHV`
+(rigFPp`n_DukigSR/s17#B<I=Y$"jmuhA"-[aD#]X-YOLnlIX;GPc9#t"J!Fg9^Y69e;S4Ah'D%0oe&
+;%/h;*M=`/1FkW6io<S=CRi#:)lH'WtTF-9j_%pRP>cNfK,g77F7YY:_I]cd'hmZY,>aQ'F=O7RflHrq
+F/lG3i=YI/FdfI'ItgAq`Q+J=KG:<`UQ5\S9M>d00@*Jjp0;W8u`J1?o8Jcl5i5:JOZN\d=OH.Fbog(r
+.OGWknE&p3f,U8DBh*L[=Bo9ROSMYVIO%Or@SH!j_M?3NH*=H9(ZnpAO*(]8qg=O3?&$7!YU#Cu_tJZK
+U(BleXZHrVFIp"(K2+m"<Hl-8BQ8g@V`E/KU&M40m&EqPI9joSNQH*hWCYQLlda/dB_%']\3!V.`bEe_
+ForD:RAV)tSbLWacu!%+=R(5>\3/FfCFAm<PLo&eA!#T/ujN/hIS;^[J_n'/ALSo90E3E_J#iR]%XZg9
+p(q>,Ebu;;0b'D#O4rg=kuCB^XFn]"4E+UOR3!IDt?ns6Of@/M/QKN.m%BMe9Jt=/])uiVs$Gho'Nn\E
+<RFkOsf%jpR#9c`"V'.B^5LWJ';=1u.5];L@A0&%muUO&,Mp&@74GJG9K+rZgrdl5T9ZWS45]'^pm@o1
+f8!BgqU3Is55Vo:/a"6;&O546#03(`4ZMp@a$4D;2LEH[Ago<>g$Um$S]M`^?7L24BpObtg0bIq^_Q1n
+"i4k,q?'8b6:-c/fj<ZUQ`VUT*MRe]O,MfA/#^@4<WS_83rj=]q(4Uk1lGqq]B9M4>+W#->GK4"i6?-R
+VFP.7ia#YdZ]S!K9(2St;\0hVWP%Sip<-Z%lh;qSe]c958FbITX./J,,)IhU/KGm<\es4Kb=;80_1gLr
+h_b-iLV?Y&H^'n'etpCs)O\RVQt$3L6nOoXEJ?0+:`!gL+HOp<KI&DgbN4Bgd:hl(t":)Z*Cr=%;oPDI
+rK`:F.8+r7pqmV7GqJbm,>XDk$DcXfeq:rE3n#*t0KLg4N#ZkhtrghJPXr<J]YoilK23;0dtXNio=Zi7
+]#M'QIBVcrAf62Z6^<a'Z+0;O<$<m9OV5*@e)c=puEWh8Q9FaQ'h'eaCY\&;-A!2s+'=[u81K3NMAe-T
+<.Fbs)gorju)K7N0!XZX<^,,><T._ODA!I-7&E:7j`+_o$!1Siu8^SMU"0)VsKB#K7jbXK9Y@+m?k$'5
+Fr/n8%#/EkLS>=/"$see@S1)=PpWROEr?DeLu2oo*/*BW`4h:+-]EdJWq?Ycogdrb'NH)=Vg"`:Q\0aU
+%u5LJ"BU/M-i6jn9a-=X=&8DXul1^"kIm^?NE2m;EHJPaIj%lKUF#lX^]-Z7f(S\ls/to#IZsp"LFU<3
+0BcRM1dj/[K8BE/qa[kN(<72SXIq^km-,od<HM9u:\;G[()&4XZIH)[h#e1O6Q6T6uXTX\@m3<n^bob*
+4=WG`)#>.L_XnfN0"E%+:^[D1D)=fZW"?82$6uBlI7FDId*MpWX7\7[hB9d\Zd/6d>Z1YBdUBd@8L\"9
+mKP)%oPo>()1>]oC<3k`qEunaZ/+hVJhV&P%j$)1e]L!87o)5&<h*E1?H9l'h7B?9R?^P$:r<Hq+(:3#
+'G@m4Z4lOnpGi`r0@"ouSXP`:1bAM`31]'%=hY6G0T"X)HTX'jUe2mcN)\M6=)c:'5rkm\fn3\TmXRED
+euGnt`fTl=cpLrSV(M-r(s$)U26@AtMO;%c5c"@A'enZgR^K#pXd$kq^*`)U32U-7>%K3HHMs.Olu#N$
+IUqR!;22bdH(%kLs68)9<*bR$0Lhmb>3HS50U.g<e3^*QPs_0k%p%KD1dGA7ULRkj>k:DX^pX,pcKf:(
+>^YFmIU,6P:"E14+#B(T1'$5%f\#-YB5d?^Gn?[T^!ums*ZX\Yi2orC4QJW&M$)`6XK:^UeGObg.'E*'
+/@?444^X4luE>OZ>T%?H`Y>dhHMK\Xr:Oc#oaH3ga4Hh07aJ)l0dF;VGTj\[c0rVPg=bgO/VTc-fAWnF
+0PoI/,SE4>VKdI,isREnbH?p$8L8;-+Sq0"Xf`g2LKIhG];;LUH<-?4'7VIO$c%aSs`i[Em9t\bpKm_1
+R@h$j4sKRbAuNs#k^UEH#kP0dd[QTgO%Xfj3Ldeg?hnBk_:1IX^8nP*_NUdn*q"U:tC%%>GC/*mQrM1Z
+2e>H[+t\_T;];K3?'ppAE(SWm7(m0-heg5<n%5]FR_Dh%(!QQ'F>Z/mc3cY.O*7Vr5lcs*W@s<Q2qrf3
+NTkQ'Kmo7>o)8B7%/!\MZ<)?[hh4"7Df.#dIpf;@<sE(.[)Pr,gtRW&=PLc[Rj%9G$*e+!*gg.0DRR!4
+*7h^6FirHGBO##qMcNNo"fng=f_/E[OL6A^6Ms9q$0<LMtD7;VuJ'pn.S7l`C\u,/<S4mdX!Vp3_8aSW
+?N1qTf["BO,!]o0K5&\\/^D83)_f0(i"b\']!8FS[@!Ir:<ZcQ?Bk."tqS:S'[llr[\)Tp1i0fs=2ke&
+&u=!WrN,!Wn\^&5A>`4molDT&JO2""6L2W%cG`1.@C=TJ5Tr[>[m]g@ND[*Igm`CV;^ai;OJ18UDU-Q7
+gFb>oF67!Gq?nl?3"%kU,qiiShO/4X?8H^]46ccT_6-^V@Ns_q*GkO8MKMFL\llR?A5@k-rsf:Tf!&mD
+7t=MHu"VJRU<+\?c%ThnK$CH1U/9?fr:_B))/rA7T4-2)UeK1Kt2b\fVn+;.Y(K@80eRpBaadK9)(*ld
+id_PDB/'md;\W.LH[shm$Z]AS'tbJ(?>GZu\r%-?sf]IJ;QAjFdN+l05fIS5mbTb07OC!(P8LEl-8QdZ
+KK4#"a:#nJ)G+!tpVd_iV51#;Ct!1&(AqAcP9@ndE?\NCJ7s)t^-V'F+ND13hoV&Jm*,*5MR%R!KGBs-
+/aAl#0>,IJY7M4ndODed<6(YIsEuT:*J8:-Y6q/7FX4@o?<,'b_7eABBuu5JkjF9?!F!:S0Q>p,7t\F[
+%kZeC<!da2`siL+8H\DFX&RfLkJ\Xm>SZFD&o_rr9NONgpZrpa4:ailiUlYaesKn]'GBrm[oG]tN-(:7
+.K=3\h#fOKc(rTXhO%YGP'cC8<QU`psMTH&X00rF>C@jb.4fo[h7@gZ_4G]5:0TDE=)<P*1*NNfO&i6G
+RP"H1L$N%3+`HlRq4c^l0-eXt%*,dS:H:cTA;5YKt;2nFH.=5(1$4O5o6ZZ=V4F_SX/_=$qsi6f7k#B\
+(V[P*;(C*#tK=SBU*Mg+H^E-q];E(BiaU0Q#N#SVct#c242E'@ST>*Q\<^7RTsFNB!W]e^^(770&^+S"
+!W(FEDH)p6H@Uq;d`gIX[]QRAm0b#(*'X?@;:^5XX,*?+\l'W>e!Q#'7P]j#rEgec6\;L*JU4Zt719OL
+AI\5_.Lq@:<Tm`o"+8O*89fU:o@F!]P&S/='nD0_EBU$NiEJ_"9Q2'LQa)**ZY%rY?Yb#^(62A7oPEEX
+eVum-K,roP(<#D>%Ikp1Zi@-^;$I[ORQbOH>Q,ZXt*TBJX;Hgph@!fG+;O<*X5Nr=33eatS!'3;SJk;c
+6N!A]pCA>ITKlAF@u&1N>6B84X<L"oU*1LPJB"<L(j^O(Z\(Ti.k=Ge_oV6#o9lk0VuASs>Qel5SdNqK
+r:KjQ,CTZY0%+Wkk3%X]A5d1eI^UkTeDuart>'5ABnLV)87l]%ql9rDMqRbVRQr?bY=Edo4E6`!T/R>'
+bL@AnGXmDQX]G<E<-m\!dg%&eX/.8SStY0+8&EMS_VR3%tHU#tmo5E,]bMG?M^@-&uKi[r6J6FuCWi'G
+`9(,TZ_N;,4'lUngD+hLu=R)ZQ1":/2iO*_AppiXB;=AeZU8.6\d=rYPjWhYl@L,0nA@V[!G3kN1fbcN
+d9YB4nid\EJDe(,'!!=BHurU]'+\0d<W%k$;U"0Y7uG:8F\]n38m?SEoJ*ZEpl!HM"0#DfKi>>JGXcn?
+%l<HHS7SZ`d6[!$$Q,V7i->A$n"LQCP1g9.5Mkm^mCNZ9OOISa(Ibe8>0/#uabE(2I^RZ@Hpb]#D1g7i
+U?8s8Dd-4ZkjfnAO+K#8nRVs7eH/2+^A2mdBLk52:G2U.*hGD_EOg0sWX@S3)'MXHKn(ZQ&)`%h==Bj9
+H2:'Up]u+i.FXNjZ:&jlJo['XOBYo(JJ-YHt^1BP2OcK>Z#JcMWZhZ@;b)LCPVdlGjJ8`FHrK)8)]rg"
+AAA1K3K:Xn!clg"G%G\./Kml81FYVkg,-/NNl'>[3eoUSFd/R5hO*K7ek??.!%.Um$3u%Bb'VpAX@Ipc
+g<*SeI3^rQpFIJ_@eC*%-eS]B&@7?[Q2hJ+Chq;m(/#rQBph0f%9@p&=X]Y$;Ou]Q(^]3SJO@rN.=aPD
+);K8r30`$H$f<G)MnA4dK((^LCH[OD%FV$\K:.5G'5<)spNK:&k$aZ#V9K;IK.KC':u.fNIC_SMQiKIX
+`$B;fq[#qjS81\GU'WJd(uGq'5B3J3Im+p@.QJ.[?WRnqkZaTV*FpXMF1bi#m)-fu8jc`<P#"@De$A1Q
+2QncHa]Y+X(=T8C'6HhP>0.Le^]?R@0Iqh+<5apObi3XK67(eu`CS()IdJ=O<M!nV4+1j@POf^[Jn;_S
+^kmR!@Yb6T8(Jhl]j_qEL2](K3XfD8iOh-XQ6+H@&-$RtLWs2)R6T5!JfH?@3ulU7ua%]DNFAe72rs#5
+P.t?rRdegoRS.::1)/\b>7Ys1*uCM:U8/"*i>70JOmN'!3`UNT7;/YO>`fhP[9s`uh8VlC6@34E`1(nW
+!?Db](1,W]\#bV%9T@qKCKfVk/>.YaG3!pkLqP.b7!&<7Eb<?X0)saVV.XT+l@,`gkCtA%43tg@gPn$H
+&tems]HV6K4\RebP,=h`NIYh`JL"j?hiBo;OiX/e!pZ]s[%`e(t&uIo<P699.K-l14I.f;-NbaEW7j='
+n>7'>j3V6@WkGm&U!u&usK+hgDb_e0oBXECibp)XnE.!TQQs(%(kSDD@_HI<o!tR!e(5CMU!EKm$<j;*
+%?+HR(RM3MGfOn%L;'/DROBb<le'A3;O[gIe/9A7T4A?i4ESNp4c\^U^_:QBm8[L<c>OfA>B@cH]2_']
+\02iF;Y6=.\gbLQC*2.4H]sJUq:J2E*Q*h]Fn$khTt%Y'"j!1,8==$Q&6toCO3g&Tc6fH*sF-[2Bhg"8
+IdK9hd:Ur3H;J[:2a!8;Qdg2u2>HJFT_DY"hsMJ(-P1!;'r?CNFW@SNhUQD/HDk)+4YPe'le@_iZO7BP
+k_%@_AHC-9MohoqJpmHD`[/[+d-'R.8tgSDp!k$idfo1K>K''V8B4do]W%r;,8J1&nu)ZhO=`/Z:Yt]Q
+*sOY-J"AlafaZSs\o&"_0P?*5dKhd^G54:LOerEM@5bF)+9Ce^sBkS[@T4\W@M+eS@sI$A3TThZC.!r4
+5>>$0@?1k`mVnG?UIgQ_N4s;iDD-bK1';\I!]4dA)n"cNt\Cr#Xm<%5<%gjlIF?DX?bq^CNL":dRL#IR
+*;_k&tD+(W`"-&fgJ4:n.4]`l,ed>JN3QccVM'or%+\IOS-peREtH)]N-khlNn1<KHG1C,%?<M!<nE@f
+-FCI<7\51-.KYoCMRm_)XP;HH7%[9hc(<k;q8M:In4Y_Z2a.c-*`PdICkuVVPX+eD/I!&Jl6rn6mVL?=
+'.P!2):1F<Jl_#7hlO6Os11l0@OHD#mMC=""bQNui.PC!lPu6D?4aVH@&,Mrqp2$Q%%#Rf+R:>K8VAB0
+<YI_B[G],T]+Dr\g[ak.7H'NdoG!AN145O=cMhn%%9Ll:#VK[rtGJST7'iNVN0GD:;dJpFb8Mg@Xj'<[
+;&MGN\WpmiKA,Tk<X,L.g;#pjWX'(j9GVDp']\ftVPNd@NPX2dImAdNIY&f.KYA.62Et.$l,TdYnkW9?
+7F!hLrVld;`&ggKg[5mc*7*4Cu["hXZGu9:$\ZE+$IWi;l@*aj&'f&p?jU)#%(N[Vac2Ur,@%7tSXI'?
+\8F4<l(<*5d+r=cLerc;E'^#SgQJg\'mapXVoi3/L$n7uNRb35"mo@Z?A,3B9*nTqP=\;(#,/TX?OaWi
+N2>2@g0'4*'D<BIt-jc,>MN:RsOYDh%HVp"+>/3=R)VP_\JdhqQdW9MCE2o.O]gB,eKs<r6;O!!%E^'c
+"j4a]u1`^_A8`.NfjAo&Rn+-Vh%SZ4]C"9q*JEn"Q+]mSt2KdFtVI<8>/FrE#'#?a8Ne06=8_?#Hhd.]
+W>K$lrX0`MYB1iuaP8-"a[LagYL.3]FtlqS-;miK<?*U+`.oI.0)p8A+`dc:NrNCA>6^Iec'84"$8O]u
+"`&gK.W0%&,$6bc)/+(t%3T[f8m_$d"/MFn0Xb0PKX&/g7cGaiXL_<h=d#Z?PA-AA#^F.jm0EX6\YJ?%
+:=9M_?gTcdp[^4=-GPa,[9+\$!2q.6'CNa2Gn5^]+\gdB?c5HZSc=8L*ho4VAa&S5@ead@jMh6UF+5Il
+?qi>*"G>X4=Ye[]-7*IJtC0&ohl0Lkpj@phG/&HU0s6Q7Z<!D;(5HT22(Mk0i&?S=Z;n*#tK7Q=dA;(_
+md^:aj822nkgVhgaD7qYqighDgmU:``5%DmQqQq9"t?^%I!*YD8AC!+[Z5/`M<<heW2l?n;nlX`R;6;m
+.6_$-B<LCHeNmG%XR(:>d@XHgNBZir$cQRO7L%Js%o!2_7Z9e*lta/)FD,e[K=g$Eel)GB7Q?7+^)]O;
+!X?@b[ef.L]*h4s5:fHX%!FisXuIX'J9'pUaZIoS\_&YL:LDQTgL(OmrK_q)Mm0:$=5$kPqfqG,iBU>Z
+6iMVrnJ8q\uq]6EdSrhnFMcD\7YdPLG6q)buteBu\JQ;8N#Z`q/?;Mi3Lg&'R<PhaI!O?*n:-.8cf6;P
+-.$g;V#W-n*0Tjf?pHH[GXkX=SWhGB\76=]oigFDu3'R*Ls*(..ASU8"COnF.G[G#VLCC;8imkI59\15
+/&'UpH33d_dt$'Cta5)3U(X)Hp=Ah07a6$AFhlhs0T;,r92Zm-S4-!!#SV5s]gC](S8g!&+mcBriB,4I
+gi$B#)N[p@-jAKou8U#I=PR6?<doro#"N%"g2eQCeh*I^f^?>+rJ+kg?pm/V!&B#Ofj^ImB]pASqC(hJ
+PZHSjdGU7aWMTQ=ON:d&)GU5&W1<2YQ*KmbBfu:X;5"_E\"`:\OMUI6QjegS$uim-O)mg=g:VC?4dfkq
+Ck%M-Uc:+!2C>W`1H04$/q$S"G-&fk!=tXBB'&OWPAlS@>i:.QQ12#X^p=.WfX6Q7kgHBP7YZ$T%R^&i
+#r8eH*Gk[9B,cP]Z'3)0;te!19CCbB`LQjI.IQ*dm=LfQGhmEBH8?B[r<i%96gRI"<.M3MBt;2kcS)QN
+mZtola?fXBDkt)t;XnF!L0'@,[QCRZ--5*"il^<E3VueJtpNh;.tP$&.m<nGY'9mskB7g9k_\IW-!8Bk
+b]2aU&FeIf8rk4ZtrpIF$[&>Q:#\R59=7&Fc/4%gf'uXhM]mk3@na$up5?pokBb6:'rH!(M'RG37rLk2
+k]E$3gKePfo'=ojd'9(9JsN1OBuVNB,tU2)R81`Pi_]E*g*o7'uUs+$ON/eV&3I<E4a+KG_JC=;2p"YN
+As<dEuC^o1]G9UX?5M],lCmdG\2E$nK`"gp1M7Z6/]/o%LWqVqfqKaOoqEGi^W5K[PsSJ,@`pNqu1an`
+%O.NZBqE-3=/T='8[oP*3Zsf)VJ'S.In--T&=$^AC[)</P:"D\9q)KaX*-P3@"*S.Of@^juS\QS.[-4E
+-5KLcKYFQmj2Pd'&q!,pai`NfK.;Z.^%4;Wi]o<j,gM()GKXhC].fK>[`MjkW&#3M@:%c^q.B#j9I%Q^
+O7UmVN%+(/9*]8Pr?I\Q8n6/.OZ`IR$YA0iTXQb:gUmA&\q06%kUX?L@>-[MZ]RlUsZVhd?KC(1W8625
+!<;D/HDWXmM4R%#16pkCbnOh;-\d?b^AX^s&32+7>4e%-?U"VG=f=(!`=01F=H'Nbng431a1Q!(N%`iW
+nOt(.Qe[p?^J=E8e[jY$CPenDJ=B92f"t)B'MTGOA^_H[@h947Q7.LPLYCl)),LpasM2cH\.!1#-5SYm
+-L-MR)4!i%X4BKAfj1<4$]-8l&5YKgP=rZd4N$^:q=1IXWrapu:VC^Rgscr4iD5hgaNl"EHg`\@V\(O[
+gJOei<`mjkmu65>]Qj=s*,hXKShjGpNGuSCN+p(s<iA]iE(QT$9JN44HkYTOGLrKX/J366@9krMNc?\!
+Y.R`R-e)41/8Zk2p8cA)ln@S!B88l;:hm/]PaD0n''!q7UoWfB4a*@`c0k\R`PmcJIFWe>ZCFI91/uW[
+Jh(Ys'"*'bqHUV,D]?7=.u5#^kStmA*=?\$b$L1-&clrk7+#%`%H/rV^)Ll(sq4hmAJ2XGiY_G'A0%]F
+k2uL"R\:E^C.#:2&>Glg)#sgGWiuXPWA6h7.Ibace*s]pdt\8P+c@XmPuXleC.I%*m5MeJ0)FD/F.'H1
+PY8knc!Z1k(@ffWF8sjWj=>?qb'?@qB$&gt]hSmdH>=rqF1bg%01SQX>30I6D0f-3gukraKD)6><[3[A
+g=32YZA=0Wm!3[VY-P2k*u-(,C]2&Z[0X9H5+;P*/4=g>#m<!(I!q7tTfT(5/2s2!F/eaNi(;Z=HOF(S
+6JM1,C^\m%9/!mY6BuXgYXF9he@LF&%umjl#&.&J62+:S0fk()CN[(1Ss1[2bo\Thm.rgt^uRkI5g4mb
++pZpM7%.nD&E_c.]dYd@s&9#mmtM7_?\^].GZ'`f\IO4[!HBr#5\;7[RcLKP>.77ueQDpU1*Q;8_a_+?
+?.KScA5a2X&Zln$q3i21UcbIo5@b:)<$RacdZ&DX8rdRPem3[VacX7h#n:%H?b;(3AtM>[2l4JkV\;X]
+F>$dnPleqIje=0=Md&XR4cO)sIApI%e-_]'SeMNZL>uqD+[jo#YUpVWem!-RU8p0/$08GUCBX207o&LC
+OdjPE*&+\@;_%k[Eo*%:EGI[%)+4p*d1<4KekfqShf`+??.KS_%NfhEN=tQP-i[m^h@_'F\\hBJ=JYWf
+rX1O,m(F@A1O3DV;<aR]!V4@#Fm[I!^5;Y-'D+hm.V'DZ--F/]O*[^:rIMcVHbN>dnUAr;:R)I<9RQm-
+XLf*Fe0#Dnao^hnQXUS);ojI.NG]OPY;lKZ17']2GJG*6F`?rV%D*4*Rj<5<"+4c-gW!q7^>=JEb9!$'
+Gsj*BE'q+?]nG_o&7YW+"Z%KmWO[dJe?iF>9I/7*$e^qTI@:1H[e4^[Jc2m^qSo__&m'87Z8,:.V<*`O
+kj-1HJ9)9XM7:QC`FIod=/..kJ3?\3rbSSND%5(dB'rc@cLjNS$TlUnP0fDj)PE2YZA=0WpNO!WXnY$t
+1>mR>Vtb:7j`Ko#i]\G&<D0/m_PW<1<8/-Ie'UZu[_'s0KL]re$lM%Hl!*-T7Oh`Ef3H5(IF^JqAUBm-
+.2!4$/oN91O]uk2r2(S9Nh88,JH9Df9R!#Bf0FCMS!6Fe(aHIVir(_*p4=20jLo)LOMbI=6NK>hm2M$]
+P:DmdBM2R@2i!A`57apH*sMTbqN[kLeMBReq/94S%rLV#/^T-EW?>\&p\<N1:FZJC2[u_``%W_74a[ig
+r;[N'n,Lb+sGKRq0p@7<7s,p.3P>F$fi@E5I87rOV5q,2VPIkVsP4N$6g.gq7R_^7:^`QBi;G<\K.J*Z
+g/pM$Di]MF:9;OH#6Z6D6AboVhE%VP^6gr-U6<g=gl7b*<bq>VP_=:S'Zd()GKUo?Hb%r^M#k%Brs$?i
+FD<>tuW4':q6Bcb[H6gn,PGOh\[29/!ucF6B#.15M2=-SuW[63%#*!9kpUg;=b3e9H03n6q#;iT0'1jO
+tkr*ZcBNj"mK9DSdXG(,B!":+2SeA]aug>?b=TPs:S<^:moG#dl>BPBn["GB\PsNAlg2?):F&"9_Di4F
+,r)M,mYXiod[_dm?DhX/i9q>_.oqNWTLr)#kAtRl>9?[VaH8_QY")h`kOUhF%6igbpi3Lk[%I0E;(Q=M
+Ak>c:(,h(qD=lS+PKBEl.:ZqlZs!.OcggP`7SOjd2:!Eoi?.X08^&91q?kn6fmAVuEaO[r2cf&+ArS*j
+PBPC2+BXEUi&-7`qEoS"!Mm1$=@pebF7]nDW4*>9=rZR$a9=r-Yacm^_ML:HuO8,]c;DG78O9)B(;,)$
+gZ\SND%u]tM+MSXoO)`l7aB9K2^G%1n3o!!$E6kih6OaN.JhA4`Dm=&`/Kprj%K>?d./4!m/*Q^=&$kK
+iGBmq&XtWMulgkKb61:Otg3WMrH\8Ppt&"qs<p6UO4fHi$@:Q)q!cC<MnpcHa_KQ,`(;Vls=6/jDR-\i
+(Bm:)kZU\ObJsBkhDJ+%A"5$jcWtoT(&$KFnY&J6K'uF*"[mZ17M[c-"1,or,$r(?8k]QnBipU[^qM'F
+"O;JC13eU#DSimch'3qod2jNg$"&il-gJV(s5=6<)Q2^Hl)YZt\!`USI_`GF'j`Z>8'piV5eXYVTq;Un
+je#'GQMeKn9Euh07c<kNB$Q[n_Be\\;4QAo65,V5gQ<gabGjM8P#r#DZm6IQ`iSTqgXBU/[M,gL*,f)X
+=MhOqLu'g\'ma\$`U]S>!!a92mLEXfXO#hE8[@2Fp_SaN@@D38[/;^YEkqPa/<#4SJPKRpV/>IU2*M=q
+"u-2%Mj__!Pk1='sk\d3kPlJ%_EJ.:u]Jlb@h$B>=nKRG!A6Cc9mO-[tK5s!-q*?>/WhD6_M^1M?^[L)
+Y"apJq:p!3f]hO#cXQ*DUg;iLKDm\T=1,R:0N4`h+a8-RU:>TV.sFR$dmH$)Ub(YJ:)5jQ,C/Zo$15De
+s50WfMmcWN<08]43[(\T.0!78\r$a&\*702>,3dXIk"&Z8Es2K@#^95O4-CY,"qLp4/[abYY(e^ZJ?ne
+C4Q:=q4o%NrKfWMukFcDa^@*#oqB+sKKaX\@6ug1o\XHd2;=iMh;X>J@t\]WtRb^YF1nrShJg2]_Y;Qm
+r%bL'QnRPa%ceR8")c03tRWp>3g^(FtK'Q$N;ta%'tC!!!"X/u&/[jQ[s1@k9"/WiFdZB?u;A)iWRVWF
+P)7R9j3+]tN^ii?;L+e^`2]B4lG\kY]f1`m)bFrVH3X:/NL+l07G8=]oC_S/KO`_uQ$dPbb+NN5gNILM
+0G#hnFNq]Qq2U==5IDKgKe;^k%N+%O9/RMM`&(Ojg4()gp3&%m;l3PL.9,M2@'l\oap.(ESKeXb4Ok*'
+H?.A9,Q6d(c\bZ,0bT_df2]-^=9AUBrP*/uEh)TN8,\mHm=O@F2&51b("+I=6OmdaEI=Qt"7Rp=`R!7?
+8Ne(AS3JW.-thm>cC<>YlXElM')R5Mc3Ln`uLm[P(bX^Y1t\<fYU<[3@1I=$IXgheQc-E_^;iTeQNIJ9
+dQ-0qi-bkCair*QO0\Mi3Mbo(&50F/FedHJZ;[)`DNbZY,>H\#0-eM\[m*I/'r>h\(FXdF#5.]8(KaR2
+m7eoH,t7)YbU)-0[RMMi2<<%l^c$PEV2!PK2H/1;jM-$TDtYBV^8TnT>*F$TiY)UqsOP]=WuH`7r7OoN
+sJ&,WNY$TkO!=3,fuc,fE4RCQOI4M`?HEL-DA/fSi'df[b54^&@VNp[6;Kb">5s3HF0d#7uh>E^Ep$0j
+9$T^:h4.='(aQb<0n1OI_r5M04d9-9g@n*m[(N]YTXX?@(tCa8b_^3DVlGimu5\2.$2FSI>JKqZlL[c-
+jo9rpJcllLT)f'^\"Z$nFHQolEIuEW*j7EBPHF!5Qr!V9^lY3ZHk_D4@#aS*=!L/mPn?/1`>.1\9D4F8
+F)0T$uBG3?ocdi8YtcHh:J4:J=Hh[^PVq\L/kl.OQT6HJU85JI\gMmd>[YJs;LalKW,*YKJV7D/C"V=p
+k4ePl-o9R/6Z*q->!]*V(#eaiR+*6"dHtoZ5BdVb`qFMi/6QDd\!ZDV20ZCk#1*;lX\NY,JIn3nu`(7)
+WmX(DhAqCMISi$o*pd$"\P)BV(feiSibo?0pq2Z]gT:LM.\57K.hNI7uA8lI7mJ1j+Wqn^!OHhV7pY:7
+t\g9uj?g&(I.gOZO1<qH;>NF6>d$FJ\a]pJ7aeqVOr;>3`iM/)Z+XrG5<B'>iTA/+l^5QbWIkpV6aA)7
+LF_!5R5@MUI#rkK`2Ok(\SD/RH*B`)aNaqn'DL779NlQ-,"$0,i^^dT`SET,n^^-+3[\C27U+F`j6>Is
+u6OXhbmDR[QY1^u!q^?OoYECi%>Ac^4&lY-+q9r9%it1=;0q)`&cdV5C-0h!6_9`"s[G-H=$D`Q1!T_o
+!]\4'R$f\'@X@fP<-W'HJ(f972+a4N*BCTna]So,&[[k7^WRTg)g&-q'8%Ha,k&/)8p/267s0;j3EQoe
+-^p=GA[eo^B'/@S#f@[%@pW>"29^]for5ace(_TVm^d`'dJC(t(8^+Is%As"Unh6fZ/c$Om$41jjSOH+
+Xjr!!%PS`59uRWi@OG,MfS4K./Buac%)n]Y(nOU8!Yg4(c-T2BC5`8kcdoYH+]sb\:QsUJNA!*^/6*d\
+>u_#P7QY`>!*'l]iu%?FXr_!4tVIPAukQQ)1CVM[s,n<+I8ZKKc[6%N[_\2P'QLF5r6nR>-BJ(qBlYHq
++U"m@mS'f?d^rO^S5h.TJf%Jqo+OT3!.n)8p?#Agq@VI/'qk%+;i/3m/=0!,LmN8kPrh?V\+Iffe?I@f
+0^G7ptQLn,Lg/08VTsKa_F%a9g+FS5@dLN&G+]KRVa!/.i,+7n:U.=PphM2E!I,&_3B-Z?kbF;A]B6!6
+-:`ofXZFCYt8\3Xt]/Z]3]pbMj%3.<Z_tIn`%)]dBaEqK5;O\JQ[)`l`6"UO.$EZ<BqL-2"eA\Bb$CP2
+F>3'2uXAVH*ParHsouXgk/$Kp+1.`PqZJpmBpkTX1ur\om>%P*/5nh;HPpVU08V)lHT5!WiEM:S'[gi^
+>:I/+I]7ZtZ5-TgO'kCL(4O:/4Q1H?sIHmW]5U9[VSJ.^kMm<bs0U7n8?e+C8A\rOScT_o"j!VT2/$-o
+Ss$_hUt!FAU1+k02/tf*UWZYM.`-^=QIoEq7uYp/eZ/9H0"Rn;TBpT02pMl+[k.k\jiWQJC5+bbP7A<a
+&ZV:'u(*cF(-j\$NCS5K.klGds,YmSt2KWA%lE-m+uJU9e4fM'pKm/pcm+AaZT@?1`gFBliZaiog=85E
+bIk?23Vmkq,Q">$COJ\'c3OZO^crh"9VG:<!#!'qTo!EW*8CbRt88pp0N0U]'q:s7ZMZ>[(EZgMOE"C,
+p:n7)=q@A,Et^'B_P(^R@,NWDmX4'e'GGaOf$ff</C!)#sX:`[%PV*W':,pAO)3/pg+#@K(87>5Xntkc
+IY'eafn.Il-kod]__=V*TS-]D6)W>*1@1e/m50hr'ZoiLaia1bm?Z\8YkQ:f(b9k'4DF<&EQ&V-U+O=&
+`.<=0f9cf%-@]*3j(DS"%[9/s`HM^-3\`@F:f<-@W;>S.,o:UH0b:a+QU&p3:k.om,epPEV3B]=Z]Z.[
+A/t!o;YemPK$hYs(t0Vd3PV4ldbp?JZ)pgYWiT8L%HWPece%pYH8e%5euROp2>F>-/RZ`l?$<f@O)?Io
+VQpl=r%+VMOL.kKb60O'e4\_c-S;[X<dAH"F,OIZZ!1E..(@\OrHrru?p3(W/K5oYai(X\V(T[.YFJcE
+'08=oHmP3HI]r0Sn28fQ"mL`Hc`Sg6%iVO+##]='Taa!<-GAC$FGthlWF_SiLkhiQ"FM7K\8Z9M-C$3n
+n[c!!!!9P=3msC<b;N+.p:!Df9SmZ2XEL4*)mi9Cf84B,[;kVTZ`/^&-J?:V89o?-<,A6$lj`If1R.kC
+cu<=[lTe99q-^Z=SqlW>rC.r93S:Y,J:\Ss:j1rMEq,1a\'VMUYrW+Z)W5H+E_HbaLDic`#4Dg%gNS=,
+a;P:qCc<jd0=4hF"&KhRn+W+X%(#*&+Y.]kuL^KD-;Mlg!c(2XM96icda,&fs)UhkWh.cd0orEC]cCG[
+U=#CTiRAG$n_9f3a$0o+Gb&J!H7_f\5&^?ba=a#M4iR&fi!0D/Ht3oB$Wk2rhh8U:7&p9#R$FmBs(!M]
+P*U/Fj<r;;Na/SnjW>:B/cOmJWk'pQ_;LH.HUq9O./Vj:(E72X*B?@caUIIa;l\Spo#XqhDa;Ll\W<X2
+VVLI*6W7[1i4m'.6P2muICPU<a[Y^YKSs;H$NWc_!GC:Ga>=5+qU>PAk%4!!!k"7+6LjAp)u#\i4\+SN
+Qeo'ao,e-e.rL,e<]4cs5s>'tXt!Dr6':b?J&]qk(g1k_J[7L9;m\po@;fFI_SD2s4htR,R#_&JZ$\=B
+J*iI6'd.7_7&,-RYgpY0Ph'1SX1#lU;1VHuM\HIsq(IG8iGVkVGf"3b.HRa9g1`4-u8!VGJ\ZZ,68`Ot
+Ic6Mi0ZFqK.3GR_b5]2]")O\F2VZ`ub+`=-qCo6c/'NR5Qt<5'6!bJ(NBKa3bD+2f@D!h_M0pLlqu7M`
+<KHg=iF$VY3$J8u6QIE/9=+(kK(M;.X=8YHP.GVtWg%Q@J8+a8b_^3DVlGimu5\2.$2FBr>e$nqK8Hm_
+"=4:K/:T$,s.DM17XujI,j_3jdcmQ=g&@_Gd)!e%+AH?\P2YZ16&+1IX`$d]$0j"3%6-9WYD"mao2rqi
+&qXgt\X!UJ5*gjN/dA*5K1@KDYcC5FOu$1)s++eZ(8D3ElEuJ]$AmgRXa\8GqPi!!!!QHASMCRO2mGCT
+M3+qo4$[?r2mR2"0Ug`dU`^CV;]6mVd(5OgFW5s7,BJSDp!i%kF9!X3c=k47`0"+88QE,UY^R3VeEl%<
+HHQ;5Ub/<ODLsp.eanRIR=D7_ANnHI7I1GjsYDrg:UGh;,cjS5?HBS?Sc`UTgsV+sLLT_M*De$>4#7TV
+.t5gt\$NP^B!ZrlE<Of;mGG$ofDHCV+BDb'P*J*/:]@;]Tmd\:=O-Df9PSnQ<8<h;Q8,jk7]]AURm&-b
+-[rLa$Kk!nD%n]tM,3$\McnTclonqG6RFLmOu6^#MFXQe2oMHo^3"]cTd,je7GGa:id:m%3gahk'\bZB
+1D2CWCjDs+FkZ[B3<LgfNgS;(PH)H:%#u$/J[/4gJJCd?6!>KgG(#]"0qB.T@m_3o0>fkN@cf@[dnM,C
+]KJd?9]WB@!1*Y@WT6Rl"j-J=hHP[)<2SZY#35O!a*?-SO7pk?Y9-H/g6,>@otC'0F9^NF1?<BCB/WX/
+leZJSXR2C4eL7(4*oZ4[>\\:)d0PqI$*h"?iJL3QR#N@KiU@Y?(iO-rmNWSlUPsQUDChZ(f;iO\,Tm,"
+dY:8cfhaQllM5KSLBcQf]pRp[#L&!oYFKamV08p8kt&^<O.%rN-U]J(@qApt4;DB)hq18Rc<U428\/_,
+IZaO*^Q7<on#qa6UNl"-ND_6N8Z[Led?@E>'!!O#.[%aZ0!:98e[b,_RO`n(taCcJ!JSk(Mo83qo1hhD
+rTLK+C-;:f:1h?=$r<S`e(okje0ZN>g@<GR#"=m3b\I;nmd/QS)Q=ceJS#VbTCN@6XPOUXAR':)I!qE4
+^)LD:GN3ENO8nB[NQt0>IEU^JI,=%N-Mch6\m0@bA-\+&DpqO-.JL?Z!!`M]jthS3MLPG'<T5[;3PGq'
+[_PdDBH+^=fThXCHb+Y$JXL)DpXl*T5&nIaCqM#\X.jCTegCG5Q9]\UI<=U<VHd?#[W@17.-0g>K:#5g
+rnWB)hq18ZMGu"WYLY9q)nN>St%sBk_;%^APgpf/u4^HZ1P9X"PqPHLoB?1G^g=i,\CS040/Z+lSiT'@
+rXVYL3Nen\uN'$lLgMrqr<KG?4BNrdP7^$JMt-hl+r!P:$64Bkba_'>i2Ghb9X>n'.=\Cu)\qEQ&;5.5
+EpB+o:iq1M+^n$9;OR8r)0ombN6bnDVFb[Vaa*8P)K67E9XN%Qii[m"]^<6rb/#"d:<0:.Ro8`Xk+Ggp
+CeEZEgc7EHJ*G3:dRt>k[$K%tE!fQV3Y,L9KVbp$1`&'un5C=gPQ4<a?+6!&]V'Yf>G(B2<\oG%Bj$gt
+^\[s5*&)CS%,?elh%QNN4o4RlY\,kUG,c>PI3"_U*!+h</@mQ:V?XZUda%C%0p2+0I]$O[eLF\8K*`Fd
+mP[I;iViea(E4%[hNIbVTC+qaN*R`mJ']bfC*/Z6X?uT*\09qsRGsK_"n`H#J3%`>*gYMX4GXH(?2!K3
+c*4SN(WK-_Gcae`Z:ThL5.SNZC2fFA^jPD-BW#d!jB:s!T;*WP&/?MMeHYm:s%D<SL@Ao#nMMBldk<->
+[u(It\f3SF@(QHLr%;HF.?6Wm]jLc'pXVJQ7Z,9q)p4pJZC6a!Z7fa?mI@=]n65q]5L:/r&E:nXrL0R"
+fB!5!JrKeig!!iQToWs3p_/I!kN;[j=aDq0ZI^>[3h_ddg$`M-mfnaMe,Z:ef%<CR);Cf1(4S]Qiu+D;
+2LIGCuZoH.o?&ZZYTb,pjrsCtS7QkF[7cPukj"7,kpoiMrr].P*.;fs>=+C?g^1^=]GcX.+%AH/cc!ai
+VX`h/q-Cn%TtDMDsC:A'C;p'.-C48ktbCS"#S(EWSCA:5MM79R^pQpj%,o]DX%aOWJ[?U/6+4eIQ/*@e
+W%61.Lf)VnDQoc[YSZ8Vc-ao&%,Es5W*0c.W-[lkZ^,*&;Ui>[u;tlqMbNq)e&X'/'(2X]m`!eEFR:c3
+r6R>[1O_VG0EPNugI$T2s'p:Q(*fHM-RR[r:0E*dd71-_;/9FQgf.,@>]SL!W/a:S0h#rd<*i<2IM"_U
+j*=5<=f12nFZqK]Cm(bC9gWp=0D%pW5O2iPL;TO%3AW>%GZE&pRN@=nl51a6VZ"V&e="DdQaSI+SnF9r
+rR-hC#`kEn(M04s?W=Uu^.V(GBRZ\4OSmNCSsG[q9L!Kbr="bW4os!!&sXjFjqi[Vab704#X0KQH>%NE
+mjhk\HbZo>"RK]lii&_98/us)(RK/a)3US9s\7Tb)OC5Q'INcT10YGMdg-.k<."KH7sO7RkC+F2H;S9h
+@n_IGWFm+uk2$%-psD:&4\Lf+",?LY&kB)sO9d[_4M1jn"!#plM$8L-`.M5;=N`;t&Sp@eW#`:,m,thS
+8c1o-eOHR9pT?1]6k)s*W^PpPg7Z?@%!6D;)?G1q/G`2]c\4(XZ&YV8M];^$Z$[[^`jBlDq*PQ9[+/?<
+'DUIp'=&AL&WS.Op<$LF53dj^EegfQB5[$n!/Q>A='4p&"LP+"j8.[o6=.(B+mS2=^5,4aQ`[6e3kM0&
+b%Km+K!f]3Ad[O_9H/HFQHe(BXY&obGU16?iFLpIo;V4lrQWF(89*\`N)*90,k//RR(OqJW!n'An(-W2
+\6#3Kun)7GetA%%;T1LSV@Gk(RG.@5Y?/hnIn$gsE_Dh9Yogk9#,sdqAq&HDY>IIJ-/QIJ!O9mt[7'S<
+K.X85:!r%b&nU,<=_7"Uef>..SAV?i>NX#K#5M_iPG$#spH7<RGSJcMIQ(J(5q4[[uBMo'qClH-kW5,)
+-$"Hk<pY@<^rilu2hLAfg&NJ,[g\d9eN<1K:&=1c...nZD3I32C%*>M8@Mrj>8BIeS#2E9-5LO7`#2Hg
+Vt5AmF3XiqBk;H2e!&m^VkkjZ/t3k?XW'mr71_%i&s6EQBW=h&kn[+*Vg3\npKm9ETJ,hHa)[Pb"?cmY
+\7e?)>I+c9M@,'DUlWrUePP(f0pT3$]mLmRk3UM]mN=ZJpj*5Kq:I>P\S/G9!!6\gT\!L5rF@Y]0*i_9
+JH.O,JpSN$Z4'WiM_<m^_e)61aPLjC/tt_Ok=>YmKfGIE=)X!rtUZ'tW6.'a`%k2IG/+mA6jUVPLEKY]
+]]ZGCQ(k5*iQ4D"-cI1SWu8LSfLtH0M\)"be6alZ>h7C\W5iddfb$5JO/`h<a,=9>26!o96DTS?SH^FN
+r:][2D2Xr.kq0-;9d\AB9l)o^jN'I.E\<Sf'G&=Cu1-O`J<^mFij6-RU2d[;F[lYW6,;+ain+2abWuC<
+llWTc(REnQ&o8j@JkQD?%5!?L23TOihi7k,he$4VZaU=r=kiFRHsa#6+WO%7;::H-aS(o=d"FiOF/YiK
+b)sD<T8AKd(6Hr==#9r^cLje]"d6o@V4OY.l,BQ^!eCF)@s&^"fu;n+Eedht$6FJ"$CKGe*+GYM.lWkL
+7`c?a;M4_ku8aG'PdQA`OFPY:eIHj%VI^:MIV1/R.f;o.r-W,")#IcO1L>=Ku>SqXs.bRF&@iiH?UBld
+6S+B!cL6r`"<?P7dbDhb=A$%Z[',lA@)rNYq_8PGZUY[(YSH%\<Ii)t<dpZ(drG`o'_pJ/TkY]osq/qA
+pX,;n(5V/c*a@gU3sYI8a>ZS<]CG<*]:mYC"TO/YCp/;Wu)<hn?M8"4Lk3[-kL+ZSM,Fg('NPVdo;Ljn
+i9UIlhH^47l'==H-:kk39.P96.\^gV3@3>8"e/:$dfATg]K`RMC+dN]0.m%sNaX'H65gYqL:eFAMbmAV
+l&3M>#*,r+^RpARra;6f!*DRNoNDFi"lCcWp"0CT`^m!`uNSqB,b/M586Bdo5+[DE2+_OP%c2G*`k8"8
+;*7'CIY,<ih)t+rFj$A?9+NqQTS!ITNA`mCIK.3bd$<j#sh'?+QQA?JgP-!W2QUGM%R&,(/ZkYJ#DWf^
+[o>R?P3qo<s&`>k"N4V7DpN\89pFIu&ho'fdE;5`HJhhDl<2XTm&X4n5GIAZadu,;$OkTC/>?o>R#&om
+X6Wo]pZrV+/Y[4SDP&m*DYV0?mYQi.5UQKj2I<<Q/N$qnF-Y-"YsjGpHta2uA'ti,iZuF]@UoVr(EJ=O
+j%5__?-\;5'-/IJ5n>rO87;r7rUtdem1o3,%C:QX_OU`rVM)pL/X#Q\,p+^+j-cXmPS5N$f%[GMIIF.!
+32tJM-]qDU[1MAVV4#\E^E(@XmrRBc=3mgU;]cJrGYIkkMs7]F*?FfgS=u7pkldkUITjQ]dN[VG3Q?HI
+%Qi2dUUR7;'^6FP@<eap-h22e[0`H]()c7?_(2=dg;DNh=h%T:8n!(KY7og(Me0XWf+q!2u#Hf/p_ks6
+<*erqN'6kBH]Eb/)n\p3.OhB\Aj!iN[V,JaC]UUZM:n(JdTF&!*sV@nB<,?X"<BmrOhDfk&[M9-9P0o:
+(.EFaA2RNq,ZqruqoNG)g.Y;`S:R+X\Nb1t!-kY)"W:qT&X/_V;Er(?q+AG'f"sb%&O"2f7AtA".XkcW
+kJ1STf4)nDOitmp>PKg/($-`JNClmM4FGOSK2)ma:4C%\9n+XSH`PY\2:Rp$:55=Ku>OJd&CeHt6bujQ
+G]Efs9_(T8H6rg[3n5s74>dccXBkp@mq-[HjJOK20epIdb.AY@%=-mk=M3k$)^rR[isE]$e*u3[LWaQW
+t0<E`J68W)f#o!W^_@U$FkJ@cmW!(>\NIr&*fLYMH]u6<\iFDuSk\?'4ph,NSsJ+,4&f+[!Ieg%k5p?4
+Z_\%@@lR/D.2%ho*a24ZIlem_+a.aeSsfbH\-o.OV;\jFfq?V?,Fpro<6-r%[bu?+f+fVZF,:cV@,+bK
+eBc/1`p3?0d`UFLYU1H1L$LKS8penmcs_Y]8-h:!:]%:;tVO%cPVZ,d`r'r-J5!AW7WfC"TZ[W%m>`X=
+_!P_RblV=>X!(,UOiJ)`B6p"_Yn$*)&>fW]hp5!7bE>HJ`%KHg:0r;pq!Sq!(B0k2f/:C*YfJXWf,<b,
+D#oea]=2qtD1\ZY@mc`Q-#k^q(mn.%L+)4aXYTGAHP(o'ESX&,5;J@]4/)KE)!0;Pa'CB>Tg1Z91GQ=$
+DH/4@L/b,KU7-Pt4Q\DSW=qh_V*KpQV-Oc],V,h"#RP-(QF(Q<X!PEPnI&(N`1T20Cr,s7V:0Tb+>B4(
+M[YO5(VQ,<=`Q.PEIDfWer`p?dcrM\!Ec=]nnrhRu^$ETF,7\JW?!nE8HOUa&CE]Y7pCMkRSA'*80`84
+F&.N$::@\8gQiKXF*ZL'\S$b6p48g$e=)X%K7bYM$.&pVh?+RghQIZnuS1R?8Ui*qmU2r1^K@Z\rHIq'
+&ep2>k,oC&.]SAk";kbkr`&l-<+"aU(bYrr)_L%NS`fIf99Eqe'JOmFntKia=m9Oc^5jioB'Go]U:LXB
+fjO>RX$B#lt$@,WR$g..kKI2/BX<h7E+UnC5t;(LMQp<NB/k3cu?&G3n_W_p:C0XOshKYdt4e0W?7qn&
+3Gs.dM8([7/sjA\7Zc^MdkfJ[<e1Mi(0BrcRZIdIP>MQaRniY>3.!YKQZIeEPN:+0E.m^oYcXP%\FMrb
+mS:cL9]::b@NY:0:q5iS_P)Rl>7,(Ddm*GN&@tX0-d:\`X;,$EEsL:6:Bb-oiFN5`I$:j;:>*'/!V(3'
+?BbjICSb\Y66HiPM9ULF+Ar?[VC_Z"5q(FVgKT:.7pYJ[7\DHtlj9g5S2BZA\_Hri%nbD#%*"2iC>DDY
+I+FZs:+TB?U9mLFl0A^:EC2RCS#U6[;[O=gYKV,:P^hg%VfXVn4`a8!.I5IIXW&NB9AKb55E>#?uBlR$
+5*04H"r/)`]'=M$J/b@ml?TWm;"P5d_sej;<#taU'3<Odn*<(`lS@'39=N)<P#]?iB34+5\m9r!qUZ3O
+jF^riT`I/R,PA4SJ2-OSsH=[(L[2H'_A907@6^c>WD>1&7T_f9V-!4EoJFdE7A.]t.cFH)'eWEG)5166
+gpLaeu;OZK6ni0/mV!XA.GRmd/<"Dnc>!%j*;?Wbo>h#lt%!7Z6oQca62BT+qh\OqWit5CUP,&^d-<Y.
+O+j5(3:"rq**Ub&YAa/i:J6'f5;#ZfmE^kHA%'II5#p'@QHHWSNo1G=CXAN0NcKR3&dcfW_..`68s3\,
+?/tf0fLZ"(jtPJ+hgmmCW,4F\J)7<_&jG?@2)4UW8Dpbr+,!8R8]KgV+%Jpeg2%ge/Sk[Vb1l6pnA>T:
+,f]5g<?kOeA5K]'*b>j4Yb8_qQ\Z:L.:K9#_/JI.a7SoC@hsY,4N1D:%4HpD/2PM^H2DZ8B%,=2du#e^
+)JjN/OaCAo3BpYZ?l"!WYL1<ooI:S?TSd'@nXqQIoieP'Zl:G4IY%s&VC?mlX$6=A=K=>/1&4hd>sEc*
+uJo1ca[hFes(tF\59L0=`?Wjf0Lb@BC_$"9<t@Xi_kS3FR%R-`g;l/b,&6-9NRbGD7R])JMN)Mb2$oV_
+;B-\8d^e%3(?H1N(IkOp`qE>?\IB:0=R<#lt%!AukJn:ek+ua9cVs3?_7nOnS.p]5>/aA&GljLQ-Vi8"
+\6P'$:N]QCJKd!,AqlNs+QteV0Nt<fn%.'j9O>bR8q"nuM0*Y\rOcQe.SjOqZD)M$J/b@ml?TWm;"P!'
+m[8m9i]AZ=V3?Fm:f!f'Ji@Y5,mEIaGZKlgQGQXEil[7!1SY'37[M-mo,t!.Zk%[r:FX93AW==g)/Fo(
+)?L;cDRuj,FWq7eH0,?VX_p<;E1r,E:"hE^Ba+!$G<O@U_er`jBI/$47,0NZ@l9,EM3EZY/LKTj,!DmG
+>PRao#nTW]qAV;<<q5SFF`G-NjDL!+I6$-5I=2%3%3A_hJUfLCOdlo^1DB%idR5]Y+0i7j"!0ehC)F$-
+ES#*-+@G!!"-B@Ue>O%3(mak*_a0S;@n,p@$nR]Y+1:^]488?+V/-r,F`*%9)ANTUbMq@>S1g!!"-B[r
+1#6cCERuF6Ai@>HV;GqQnL3le/UW]mB@[Dr6#h3Tld%Y_K.J85N'+k)^5X!!!#(6HB##QX7hZc&E_Qpt
+*:[2*F,$KEi//:O'mZnjlSPGik)$!WW3#!-1C+!!!!a:'^h"!!"8cF>D;QS6D'8WTpekzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz!5SVO%h;,1!!!!%rI<Xa:]UOrzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz!8oN`@C<r~>
+Q
+.639216 .721569 .800000 RG
+newpath
+248.000 139.000 m
+252.000 139.000 l
+252.000 143.000 l
+248.000 143.000 l
+248.000 139.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+247.000 138.000 m
+248.000 138.000 l
+248.000 144.000 l
+247.000 144.000 l
+247.000 138.000 l
+h
+f
+newpath
+248.000 138.000 m
+252.000 138.000 l
+252.000 139.000 l
+248.000 139.000 l
+248.000 138.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+248.000 143.000 m
+253.000 143.000 l
+253.000 144.000 l
+248.000 144.000 l
+248.000 143.000 l
+h
+f
+newpath
+252.000 138.000 m
+253.000 138.000 l
+253.000 143.000 l
+252.000 143.000 l
+252.000 138.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+273.000 139.000 m
+277.000 139.000 l
+277.000 143.000 l
+273.000 143.000 l
+273.000 139.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+272.000 138.000 m
+273.000 138.000 l
+273.000 144.000 l
+272.000 144.000 l
+272.000 138.000 l
+h
+f
+newpath
+273.000 138.000 m
+277.000 138.000 l
+277.000 139.000 l
+273.000 139.000 l
+273.000 138.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+273.000 143.000 m
+278.000 143.000 l
+278.000 144.000 l
+273.000 144.000 l
+273.000 143.000 l
+h
+f
+newpath
+277.000 138.000 m
+278.000 138.000 l
+278.000 143.000 l
+277.000 143.000 l
+277.000 138.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+298.000 139.000 m
+302.000 139.000 l
+302.000 143.000 l
+298.000 143.000 l
+298.000 139.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+297.000 138.000 m
+298.000 138.000 l
+298.000 144.000 l
+297.000 144.000 l
+297.000 138.000 l
+h
+f
+newpath
+298.000 138.000 m
+302.000 138.000 l
+302.000 139.000 l
+298.000 139.000 l
+298.000 138.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+298.000 143.000 m
+303.000 143.000 l
+303.000 144.000 l
+298.000 144.000 l
+298.000 143.000 l
+h
+f
+newpath
+302.000 138.000 m
+303.000 138.000 l
+303.000 143.000 l
+302.000 143.000 l
+302.000 138.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+248.000 159.000 m
+252.000 159.000 l
+252.000 163.000 l
+248.000 163.000 l
+248.000 159.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+247.000 158.000 m
+248.000 158.000 l
+248.000 164.000 l
+247.000 164.000 l
+247.000 158.000 l
+h
+f
+newpath
+248.000 158.000 m
+252.000 158.000 l
+252.000 159.000 l
+248.000 159.000 l
+248.000 158.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+248.000 163.000 m
+253.000 163.000 l
+253.000 164.000 l
+248.000 164.000 l
+248.000 163.000 l
+h
+f
+newpath
+252.000 158.000 m
+253.000 158.000 l
+253.000 163.000 l
+252.000 163.000 l
+252.000 158.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+298.000 159.000 m
+302.000 159.000 l
+302.000 163.000 l
+298.000 163.000 l
+298.000 159.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+297.000 158.000 m
+298.000 158.000 l
+298.000 164.000 l
+297.000 164.000 l
+297.000 158.000 l
+h
+f
+newpath
+298.000 158.000 m
+302.000 158.000 l
+302.000 159.000 l
+298.000 159.000 l
+298.000 158.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+298.000 163.000 m
+303.000 163.000 l
+303.000 164.000 l
+298.000 164.000 l
+298.000 163.000 l
+h
+f
+newpath
+302.000 158.000 m
+303.000 158.000 l
+303.000 163.000 l
+302.000 163.000 l
+302.000 158.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+248.000 179.000 m
+252.000 179.000 l
+252.000 183.000 l
+248.000 183.000 l
+248.000 179.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+247.000 178.000 m
+248.000 178.000 l
+248.000 184.000 l
+247.000 184.000 l
+247.000 178.000 l
+h
+f
+newpath
+248.000 178.000 m
+252.000 178.000 l
+252.000 179.000 l
+248.000 179.000 l
+248.000 178.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+248.000 183.000 m
+253.000 183.000 l
+253.000 184.000 l
+248.000 184.000 l
+248.000 183.000 l
+h
+f
+newpath
+252.000 178.000 m
+253.000 178.000 l
+253.000 183.000 l
+252.000 183.000 l
+252.000 178.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+273.000 179.000 m
+277.000 179.000 l
+277.000 183.000 l
+273.000 183.000 l
+273.000 179.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+272.000 178.000 m
+273.000 178.000 l
+273.000 184.000 l
+272.000 184.000 l
+272.000 178.000 l
+h
+f
+newpath
+273.000 178.000 m
+277.000 178.000 l
+277.000 179.000 l
+273.000 179.000 l
+273.000 178.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+273.000 183.000 m
+278.000 183.000 l
+278.000 184.000 l
+273.000 184.000 l
+273.000 183.000 l
+h
+f
+newpath
+277.000 178.000 m
+278.000 178.000 l
+278.000 183.000 l
+277.000 183.000 l
+277.000 178.000 l
+h
+f
+.639216 .721569 .800000 RG
+newpath
+298.000 179.000 m
+302.000 179.000 l
+302.000 183.000 l
+298.000 183.000 l
+298.000 179.000 l
+h
+f
+.909804 1.00000 1.00000 RG
+newpath
+297.000 178.000 m
+298.000 178.000 l
+298.000 184.000 l
+297.000 184.000 l
+297.000 178.000 l
+h
+f
+newpath
+298.000 178.000 m
+302.000 178.000 l
+302.000 179.000 l
+298.000 179.000 l
+298.000 178.000 l
+h
+f
+.447059 .501961 .556863 RG
+newpath
+298.000 183.000 m
+303.000 183.000 l
+303.000 184.000 l
+298.000 184.000 l
+298.000 183.000 l
+h
+f
+newpath
+302.000 178.000 m
+303.000 178.000 l
+303.000 183.000 l
+302.000 183.000 l
+302.000 178.000 l
+h
+f
+.639216 .721569 .800000 RG
+Q
+Q
+
+%%Trailer
+%%EOF
