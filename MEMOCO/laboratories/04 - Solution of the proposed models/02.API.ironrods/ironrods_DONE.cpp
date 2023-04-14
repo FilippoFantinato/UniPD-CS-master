@@ -28,7 +28,7 @@ const double K = 10000.0;
 const double F = 50.0;
 const double N = 4.0;
 const double L = 65.0;
-			
+
 const int NAME_SIZE = 512;
 char name[NAME_SIZE];
 	

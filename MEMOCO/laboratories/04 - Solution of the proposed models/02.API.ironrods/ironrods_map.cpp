@@ -152,7 +152,7 @@ void setupLP(CEnv env, Prob lp)
 		}
 	}
 
-	
+
 	// add counting constraint (sum_ij y_ij - z <= N)
 	{
 		std::vector<int> idx;

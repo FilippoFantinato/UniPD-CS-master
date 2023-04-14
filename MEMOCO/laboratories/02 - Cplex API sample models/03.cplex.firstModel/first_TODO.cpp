@@ -36,6 +36,8 @@ int main (int argc, char const *argv[])
 	//	  CPXLPptr  CPXcreateprob  ( env, status_out, probname )
 	//
 	///TODO...
+	DECL_ENV(env)
+	DECL_PROB(env, lp)
 
 		
 	///////////////////////// create variables with newcols
