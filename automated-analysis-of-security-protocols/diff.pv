@@ -1,0 +1,11 @@
+channel c.
+
+fun aenc(bitstring, bitstring): bitstring.
+fun pk(bitstring): bitstring.
+
+reduc forall x:bitstring, y:bitstring; adec(aenc(x,pk(y)),y) = x.
+
+const zero: bitstring.
+const one: bitstring.
+
+process new n: bitstring; new k: bitstring; out(c, aenc(diff[zero,one], pk(k))); out(c, pk(k))

@@ -1,0 +1,70 @@
+channel c.
+
+type pkey.
+type skey.
+fun pk(skey): pkey.
+fun aenc(bitstring, pkey): bitstring.
+reduc forall x: bitstring, y: skey;
+      adec(aenc(x,pk(y)), y) = x.
+
+event start_a(pkey, pkey, bitstring).
+event end_a(pkey, pkey, bitstring, bitstring).
+event start_b(pkey, pkey, bitstring, bitstring).
+event end_b(pkey, pkey, bitstring, bitstring).
+event registered(pkey).
+event compromised(pkey).
+event revealed(pkey, pkey, bitstring).
+(* weak secrecy *)
+query pka: pkey, pkb: pkey, na: bitstring;
+      event(revealed(pka, pkb, na)) ==> (event(compromised(pkb))).
+query attacker(new nb).
+
+(* completion *)
+query pka: pkey, pkb: pkey, na: bitstring, nb:bitstring;
+      event(end_a(pka, pkb, na, nb)).
+query pka: pkey, pkb: pkey, na: bitstring, nb:bitstring;
+      event(end_b(pka, pkb, na, nb)).
+
+(* agreement:
+Verify that injective weak agreement is guaranteed to the initia-
+tor, while non-injective, weak agreement is violated. *)
+query pka: pkey, pkb: pkey, na: bitstring, nb:bitstring;
+      inj-event(end_a(pka, pkb, na, nb)) ==>
+      		       (inj-event(start_b(pka, pkb, na, nb)) ||
+			event(compromised(pkb))).
+query pka: pkey, pkb: pkey, na: bitstring, nb:bitstring;
+      event(end_b(pka, pkb, na, nb)) ==>
+      		       (event(start_a(pka, pkb, na)) ||
+		       	event(compromised(pka))).
+
+let alice(ski: skey, pkr: pkey) =
+    new na: bitstring;
+    in(c, x:bitstring); if x = na then event revealed(pk(ski), pkr, na) |
+    event start_a(pk(ski), pkr, na);
+    out(c, aenc((pk(ski), na), pkr));
+    in(c, x: bitstring);
+    let (xna: bitstring, xnb: bitstring) = adec(x, ski) in
+    if xna = na then
+    event end_a(pk(ski), pkr, na, xnb);
+    out(c, aenc(xnb, pkr)).
+
+let bob(skr: skey) =
+    in(c, y: bitstring);
+    let (pki: pkey, yna: bitstring) = adec(y, skr) in
+    new nb: bitstring;
+    event start_b(pki, pk(skr), yna, nb);
+    out(c, aenc((yna, nb), pki));
+    in(c, z: bitstring);
+    let znb : bitstring = adec(z, skr) in
+    event end_b(pki, pk(skr), yna, nb);
+    if znb = nb then 0.
+(*
+process new ska: skey; new skb: skey;
+	( alice(ska, pk(skb)) | bob(skb)
+	| out(c, pk(ska)) | out(c, pk(skb))) *)
+process new d: channel; !new sk: skey;
+	! (in(d, skb: skey); alice(sk, pk(skb)))
+	| !bob(sk)
+	| !out(d, sk)
+	| (event registered(pk(sk)); out(c, pk(sk)))
+	| (event compromised(pk(sk)); out(c, sk))

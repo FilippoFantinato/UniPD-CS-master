@@ -1,0 +1,14 @@
+channel c.
+const c0:bitstring.
+const c1:bitstring.
+
+fun h(bitstring): bitstring.
+
+(* example 5.3
+process in(c, x: bitstring);
+	if x = c0 then out(c, diff[c1,c0]) *)
+
+(* example 5.4
+process in(c, x: bitstring);
+	new n: bitstring;
+	out(c,diff[h(n), h((x,n))]) *)
