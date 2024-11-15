@@ -1,1 +1,1 @@
-# UniPD-CS-master
+# UniPD Compuer Science master's degree
